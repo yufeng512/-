@@ -1,0 +1,23 @@
+page{
+  background: #f3f3f7;
+}
+.page-cell {
+  padding: 330rpx 30rpx;
+  text-align: center;
+}
+.page-cell image{
+  width: 200rpx;
+  height: 200rpx;
+  display: inline-block;
+}
+.page-cell .tips{
+  padding: 40rpx 0;
+}
+.btn-common{
+  height: 70rpx;
+  line-height: 70rpx;
+  background: #fe697f;
+  border-radius: 10rpx;
+  font-size: 34rpx;
+  color: #fff;
+}

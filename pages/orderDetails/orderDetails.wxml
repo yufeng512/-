@@ -1,0 +1,50 @@
+<import src="/template/header-tpl.wxml" />
+<template is="headerTpl"></template>
+<view class="warpper">
+  <view class="img-box">
+    <image mode="widthFix" src="{{imgUrl+'index-bg.png'}}"></image>
+  </view>
+  <view class="img-tag">
+    <image mode="widthFix" src="{{imgUrl+'server01.png'}}"></image>
+  </view>
+  <view class="content">
+    <view class="details-box">
+      <view class="info-item">
+        <text>服务柜台</text>
+        <text>{{counterName}}</text>
+      </view>
+      <view class="info-item">
+        <text>柜台电话</text>
+        <text>{{counterPhone}}</text>
+      </view>
+      <view class="info-item">
+        <text>服务地址</text>
+        <text>{{counterAddress}}</text>
+      </view>
+      <view class="info-item">
+        <text>预约时间</text>
+        <text>{{time}}</text>
+      </view>
+    </view>
+    <view class="map">
+        <map
+          id="map"
+          longitude="113.324520"
+          latitude="23.099994"
+          scale="14"
+          controls="{{controls}}"
+          bindcontroltap="controltap"
+          markers="{{markers}}"
+          bindmarkertap="markertap"
+          polyline="{{polyline}}"
+          bindregionchange="regionchange"
+          show-location
+          style="width: 100%; height: 300px;"
+        ></map>
+    </view>
+    <view class="btn-box">
+      <button bindtap="submit">确认</button>
+    </view>
+  </view>
+</view>
+

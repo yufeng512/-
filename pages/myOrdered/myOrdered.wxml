@@ -1,0 +1,32 @@
+<import src="/template/header-tpl.wxml" />
+<template is="headerTpl"></template>
+<view class="warpper">
+  <view class="img-box">
+    <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image>
+  </view>
+  <view class="content">
+    <view class="my-ordered flex-cen">
+      <view class="item-btn {{item.status==current?'active':''}}" wx:for="{{statusBtn}}" wx:key="index" wx:for-item="item" data-status="{{index}}" bindtap="selectStatus">
+      {{item.text}}
+      </view>
+    </view>
+    <view class="order-container">
+      <scroll-view
+        scroll-y
+        style="height: 52vh;">
+        <view class="item-box" wx:for="{{list}}" wx:key="index" data-bookId="{{item.bookId}}" wx:for-item="item"  bindtap="goDetails">
+          <view class="text-box">
+            <text wx:if="{{item.serviceName}}">{{item.serviceName}}</text>
+            <text wx:if="{{item.counterName}}">预约门店:{{item.counterName}}</text>
+            <text wx:if="{{item.counterAddress}}">门店地址:{{item.counterAddress}}</text>
+            <text wx:if="{{item.staffName}}">修眉师:{{item.staffName}}</text>
+            <text wx:if="{{item.bookingTime}}">预约时间:{{item.bookingTime}}</text>
+          </view>
+          <view class="btn-box">
+            <button data-id="{{item.bookId}}" bindtap="goEvaluate">{{current==1?'评价':'修改'}}</button>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

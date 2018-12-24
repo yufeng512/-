@@ -1,0 +1,8 @@
+<!--pages/servicesOreder/servicesOreder.wxml-->
+<view class="warpper">
+  <view class="order-box">
+    <view class="title">{{title}}</view>
+    <image></image>
+  </view>
+  <button data-id="{{id}}" bindtap="ordering">立即预约</button>
+</view>

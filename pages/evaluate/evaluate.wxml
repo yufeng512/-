@@ -1,0 +1,22 @@
+<import src="/template/header-tpl.wxml" />
+<template is="headerTpl"></template>
+<view class="warpper">
+  <view class="img-box">
+      <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image>
+  </view>
+  <view class="content">
+    <view class="evaluate-item" wx:for="{{evaluateList}}" wx:key="index" wx:for-item="item">
+      <view class="problem-title"> {{'Q'+(index+1)+'. '+item.problem}}</view>
+      <view class="problem-radio">
+        <radio-group class="radio-group" data-index="{{index}}" bindchange="radioChange">
+            <radio class="radio" wx:for-items="{{item.options}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}" color="#fe697f">
+                <text>{{item.name}}</text>
+            </radio>
+        </radio-group>
+      </view>
+    </view>
+    <view class="btn-box">
+      <button bindtap='submit'>确认提交</button>
+    </view>
+  </view>
+</view>

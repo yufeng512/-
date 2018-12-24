@@ -1,0 +1,189 @@
+/**app.wxss**/
+
+page {
+  background: #fff8f2;
+}
+
+.container {
+  position: relative;
+  box-sizing: border-box;
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+}
+
+view, image, text, navigator {
+  box-sizing: border-box;
+}
+
+.container {
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 29rpx;
+  color: #000;
+}
+
+image {
+  display: block;
+  width: 100%;
+}
+
+.txt-import {
+  color: #1f94a6;
+}
+
+.txt-import.bold.icon {
+  font-weight: bold;
+  padding-left: 20rpx;
+  position: relative;
+  line-height: 48rpx;
+}
+
+.txt-import.bold:before {
+  width: 6rpx;
+  height: 6rpx;
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: #1f94a6;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.txt-small {
+  font-size: 20rpx;
+  line-height: 1;
+  margin: 28rpx 0 36rpx 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.fr {
+  float: right;
+}
+
+.clearfix:after, .clearfix:before {
+  display: table;
+  content: " ";
+  height: 0;
+  visibility: hidden;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.fl {
+  float: left;
+}
+
+.inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* 灰度  */
+
+.grey {
+  /* -webkit-filter: grayscale(100%);
+    filter: grayscale(100%); */
+}
+
+/* flex横排 */
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+/* flex横排居中 */
+
+.flexRowCen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+/* flex竖排 */
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+/* flex竖排居中 */
+
+.flexColumnCen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* flex居中 */
+.flex-cen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* flex */
+.flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+/* flex btw */
+.flex-btw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty{
+  width: 100vw;
+  height: 80vh;
+  /* background-color: #f5f5f5; */
+  justify-content: center;
+}
+.empty image{
+  width: 196rpx;
+  height: 160rpx; 
+  margin-bottom: 30rpx;
+}
+
+/* button  */
+
+button[disabled] {
+  background: #ccc !important;
+}
+
+button:after {
+  border: none;
+}
+
+.header-box{
+  position: relative;
+}
+.header-box .menu{
+  position: absolute;
+  left: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60rpx;
+  height: 60rpx;
+  padding: 0;
+  background: none;
+}
+.header-box .menu image{
+  width: 60rpx;
+  height: 60rpx;
+}

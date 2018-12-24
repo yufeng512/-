@@ -1,0 +1,9 @@
+<view class="container">
+    <view class="page-cell">
+     <form report-submit='true' bindsubmit='formSubmit'>
+        <image src="../../../static/images/login-error.png" mode="widthFix"></image>
+        <view class="tips">亲，首次进入贝玲妃小程序，请授权即可使用！</view> 
+        <button open-type='getUserInfo' bindgetuserinfo='getUserInfo' form-type='submit' class="btn-common">允许授权</button>
+      </form> 
+    </view>
+</view>
