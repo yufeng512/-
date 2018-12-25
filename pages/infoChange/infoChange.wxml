@@ -1,0 +1,63 @@
+<import src="/template/header-tpl.wxml" />
+<template is="headerTpl"></template>
+  <view class="warpper">
+    <view class="img-box" wx:if="{{!maskShow}}">
+      <image mode="widthFix" src="{{imgUrl+'register-bg.png'}}"></image>
+    </view>
+    <view class="mask" wx:if="{{!maskShow}}">
+      <view >
+        <image mode="widthFix" src="{{imgUrl+'my-info.png'}}"></image>
+      </view>
+      <form bindsubmit="submit">
+        <view class="item flex-start">
+          <view class="item-img"><image src='/images/name.png' mode="widthFix"></image></view>
+          <view class="input-box"><input type="text" name="name" value="{{name}}" type="text" placeholder="默认预约姓名"  placeholder-class="place-holder"/></view>
+        </view>
+        <!-- 电话 -->
+        <view class="item flex-start">
+          <view class="item-img"><image src='/images/register-phone.png' mode="widthFix"></image></view>
+          <view class="input-box"><input maxlength="11" name="phone" value="{{phone}}" type="number" placeholder="默认预约手机号" placeholder-class="place-holder"/></view>
+        </view>
+        <!-- 年月日 -->
+        <view class="item flex-start">
+          <view class="item-img"><image src="/images/birth.png" mode="widthFix"></image></view>
+          <view class="select-box">
+            <picker mode="date" value="{{birthday}}" bindchange="bindDateChange">
+              <view class="picker" wx:if="{{birthday==''}}">{{birthday==''?'年与日':''}}</view>
+              <view class="picker">{{birthday}}</view>
+            </picker>
+          </view>
+          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
+        </view>
+        <view class="tip">
+          <text>*请选择您的生日年/月，注册成功后生日无法修改</text>
+        </view>
+        <!-- 性别 -->
+        <view class="item flex-start">
+          <view class="item-img"><image mode="widthFix" src="/images/sex.png"></image></view>
+          <view class="select-box">
+            <picker bindchange="bindSexChange" mode="selector" value="{{sexIndex}}" range="{{sexList}}">
+              <view class="picker">{{sexList[sexIndex]}}</view>
+            </picker>
+          </view>
+          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
+        </view>
+        <view class="check-box">
+          <label class="checkbox" >
+            <checkbox value="{{checked.value}}" color="#fe697f" checked="{{checked.value}}" />
+          </label>
+          <text bindtap="read">{{checked.name}}</text>
+        </view>
+        <view class="btn-box">
+          <button form-type='submit'>确认提交</button>
+        </view>
+      </form>
+    </view>
+    <view class="privacy-box" wx:if="{{maskShow}}">
+      <image mode="widthFix" src="{{imgUrl+'privacy.png'}}"></image>
+      <view class="btn-box">
+        <button bindtap='close'>关闭</button>
+      </view>
+    </view>
+  </view>
+

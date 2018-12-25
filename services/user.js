@@ -13,7 +13,7 @@ function loginByWeixin() {
   return new Promise(function (resolve, reject) {
     return util.login().then((res) => {
       code = res.code;
-      return util.getUserInfo();
+      return util.getUserInfo()
     }).then((userInfo) => {
       //登录远程服务器
       util.request(api.AuthLoginByWeixin, { code: code, userInfo: userInfo,sendMemberId: wx.getStorageSync('sendMemberId')}, 'POST').then(res => {
@@ -39,7 +39,6 @@ function loginByWeixin() {
       }).catch((err) => {
           console.log('请求后台login出错了')
           reject(err);
-
       });
     }).catch((err) => {
       console.log('wx.lgoin 出错了')

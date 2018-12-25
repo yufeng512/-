@@ -109,17 +109,18 @@
           <view class="text {{item.available?'active':''}}" >{{item.available?'可约':item.day=='-'?'--':'不可'}}</view>
         </view>
       </view>
-      <view class="time-box">
+      <view class="select-tip" wx:if="{{timeList.length==0}}">请选择日期</view>
+      <view class="time-box" wx:else>
         <scroll-view
           scroll-y
-          style="height: 42vh;">
+          style="height: 42vh;" >
         <view class="time-item flexColumnCen {{item.value==1?'active':''}}" wx:for="{{timeList}}" wx:key="index" data-item="{{item}}" data-index="{{index}}" bindtap="selectTime">
           <view class="item-bg {{currentIndex==index?'current-bg':''}}">
-            <text>{{item.timeFrom + '-' + item.timeTo}}可预约</text>
+            <text>{{item.timeFrom + '-' + item.timeTo}}  可预约</text>
           </view>
         </view>
         </scroll-view>
-        <view class="btn-box">
+        <view class="comfirn-btn">
           <button bindtap="submit">确认提交</button>
         </view>
       </view>

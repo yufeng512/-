@@ -1,6 +1,0 @@
-<view>
-  <image mode="widthFix" src="{{imgUrl+'privacy.png'}}"></image>
-</view>
-<view class="btn-box">
-  <button bindtap='close'>关闭</button>
-</view>

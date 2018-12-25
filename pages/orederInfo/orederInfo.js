@@ -57,7 +57,9 @@ Page({
   getStoreList(counterCode, serviceCode) {
     let params = {
       serviceCode: serviceCode?serviceCode:this.data.serverList[this.data.severIndex].serviceCode,
-      city: this.data.region
+      city: this.data.region,
+      longitude: this.data.longitude,
+      latitude: this.data.latitude
     }
     wx.showLoading({ title: '加载中', mask: true })
     util.request(api.StoreList, params, 'get').then(res => {
@@ -141,7 +143,6 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    // this.getLocation()
     if (options.serviceCode) {
       this.getServiceList(options.serviceCode)
     }
@@ -152,6 +153,7 @@ Page({
       this.getBookList(options)
     }
     this.initValidate()
+    this.getLocation()
     
   },
   getLocation() {
@@ -166,17 +168,17 @@ Page({
           latitude: latitude,
           longitude: longitude
         })
-        wx.showModal({
-          title: '获取到当前的经纬度',
-          content: '经度：' + longitude + '，纬度：' + latitude,
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        })
+        // wx.showModal({
+        //   title: '获取到当前的经纬度',
+        //   content: '经度：' + longitude + '，纬度：' + latitude,
+        //   success: function (res) {
+        //     if (res.confirm) {
+        //       console.log('用户点击确定')
+        //     } else if (res.cancel) {
+        //       console.log('用户点击取消')
+        //     }
+        //   }
+        // })
       }
     })
   },
@@ -215,11 +217,13 @@ Page({
     this.setData({
       phone: e.detail.value
     })
+    wx.setStorageSync('defaultPhone', e.detail.value)
   },
   inputName (e) {
     this.setData({
       name: e.detail.value
     })
+    wx.setStorageSync('defaultName', e.detail.value)
   },
   bindDateChange(e) {
     if (this.data.storeIndex==null||this.data.staffIndex==null){
@@ -301,6 +305,8 @@ Page({
           date: val[0] + '-' + val[1] + '-' + item.day,
           timeList: list
         })
+      }else{
+        wx.showToast({title: res.err_msg,icon: 'none'})
       }
     }).catch(err => { 
       console.log(err)
@@ -399,6 +405,8 @@ Page({
           dayList: daylist,
           timeList: []
         })
+      } else {
+        wx.showToast({ title: res.err_msg, icon: 'none' })
       }
       wx.hideLoading()
     }).catch(err => { 
@@ -443,6 +451,7 @@ Page({
     }
   },
   save(params) {
+    let memberType = wx.getStorageSync('memberType')
     wx.showLoading({ title: '保存中', mask: true })
     util.request(api.ServiceSave, params, 'post').then(res => {
       wx.hideLoading()
@@ -453,12 +462,16 @@ Page({
           confirmColor: '#fe697f',
           success(res) {
             if (res.confirm) {
-              wx.switchTab({ url: '/pages/index/index' })
+              if (memberType == 0){
+                wx.navigateTo({ url: '/pages/register/register' })
+              } else if (memberType == 1){
+                wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
+              }
             }
           }
         })
       } else {
-        wx.showToast({ title: '预约服务保存失败！', icon: 'none' })
+        wx.showToast({ title: res.err_msg, icon: 'none' })
       }
     }).catch(err => {
       console.log(err)
@@ -482,7 +495,7 @@ Page({
           }
         })
       } else {
-        wx.showToast({ title: '预约服务更新失败！', icon: 'none' })
+        wx.showToast({ title: res.err_msg, icon: 'none' })
       }
     }).catch(err => {
       console.log(err)

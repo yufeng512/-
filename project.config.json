@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -79,6 +79,12 @@
 					"id": -1,
 					"name": "隐私条款",
 					"pathName": "pages/privacy/privacy",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "个人信息",
+					"pathName": "pages/infoChange/infoChange",
 					"query": ""
 				}
 			]

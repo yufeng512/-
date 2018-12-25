@@ -1,5 +1,7 @@
-var NewApiRootUrl = 'http://172.23.21.60:8888/benefit_xcx/api/';//开发接口
-var ImgUrl = 'http://172.23.21.60:8888/benefit_xcx/statics/images/';//静态资源
+var NewApiRootUrl = 'http://3c1c5513bf327385.natapp.cc/benefit_xcx/api/';//开发接口
+var ImgUrl = 'http://3c1c5513bf327385.natapp.cc/benefit_xcx/statics/images/';//静态资源
+// var NewApiRootUrl = 'https://booking.benefitbrows.cn/benefit_xcx/api/';//生产接口
+// var ImgUrl = 'https://booking.benefitbrows.cn/benefit_xcx/statics/images/';//生产静态资源
 
 module.exports = {
   BaseUrl: NewApiRootUrl,//域名地址(完成)
@@ -19,4 +21,5 @@ module.exports = {
   OrderStaffList: NewApiRootUrl + "system/staffAvailableTimeSlot",//预约美容师列表
   // member: NewApiRootUrl + "system/token/{memberId}",//获取会员 api token
   SearchBook: NewApiRootUrl + "booking/booking/",//获取会员 api token
+  LastBook: NewApiRootUrl + "booking/lastBooking/",//获取上次预约的地址
 };

@@ -6,8 +6,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
-  width: 100vw;
 }
 .warpper .content{
   position: absolute;
@@ -18,7 +19,7 @@
 }
 .item{
   height: 70rpx;
-  margin: 30rpx 4vw;
+  margin: 30rpx 12vw;
   padding: 10rpx 0; 
   background-repeat: no-repeat;
   background-size: 100% 100%;

@@ -1,6 +1,6 @@
 <template name="headerTpl">
   <view class="header-box">
-    <image mode="widthFix" src="http://172.23.21.60:8888/benefit_xcx/statics/images/head-img.png"></image>
+    <image mode="widthFix" src="http://3c1c5513bf327385.natapp.cc/benefit_xcx/statics/images/head-img.png"></image>
     <button class="menu" open-type="share">
       <image src="/images/menu.png"></image>
     </button>

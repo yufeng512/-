@@ -21,6 +21,11 @@
   text-align: center;
   background: #eea0ae;
 }
+.select-tip{
+  text-align: center;
+  color: #999999;
+  font-size: 26rpx;
+}
 .tip text{
   color: #ffffff;
   font-size: 26rpx;
@@ -97,6 +102,10 @@
 .btn-box{
   margin: 100rpx 0 60rpx;
 }
+.comfirn-btn{
+  margin: 40rpx 0 60rpx;
+}
+.comfirn-btn button,
 .btn-box button{
   width: 60vw;
   color: #333333;
@@ -117,8 +126,8 @@
   line-height: 60rpx;
   border-radius: 30rpx;
 }
-.time-box .time-item text:first-child{
-  margin-right: 30rpx;
+.time-box .time-item text{
+  font-size: 28rpx;
 }
 .time-box .time-item.active{
   color: #fe697f;

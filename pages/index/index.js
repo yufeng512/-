@@ -51,53 +51,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    user.checkLogin().then(res => {
+      console.log('res++++++++++++++', res)
+      if (res) {
+        this.getData()
+      } else {
+        user.loginByWeixin().then(data => {
+          console.log('data++++++++++', data)
+          this.getData()
+        }).catch(err => {
+          wx.showLoading({ title: err, mask: true })
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
 
+    
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.getData()
-    // var pages = getCurrentPages() //获取加载的页面
-    // var currentPage = pages[pages.length - 1] //获取当前页面的对象
-    // var url = currentPage.route //当前页面url
-    // user.checkLogin().then(res => {
-    //   console.log("检测登录结果：", res);
-    //   if (!res) {
-    //     //没有登陆验证是否授权
-    //     wx.getSetting({
-    //       success: res => {
-    //         if (res.authSetting['scope.userInfo']) {
-    //           //已经授权执行登陆
-    //           wx.showLoading({title: '登录中',mask: true})
-    //           user.loginByWeixin().then(res => {
-    //             wx.hideLoading();
-    //             console.log("登录成功:", res);
-                
-    //           }).catch((err) => {
-    //             wx.hideLoading()
-    //             wx.redirectTo({ //没有授权
-    //               url: '/pages/auth/login/login?path=/' + url　　// 授权界面
-    //             })
-    //           })
-    //         } else {
-    //           wx.redirectTo({ //没有授权
-    //             url: '/pages/auth/login/login?path=/' + url　　// 授权界面
-    //           })
-    //         }
-    //       }
-    //     });
-    //   } else {
-    //     this.getData()
-    //   }
-    // }).catch((err) => {console.log('出错了', err)})
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

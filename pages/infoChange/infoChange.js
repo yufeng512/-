@@ -7,38 +7,40 @@ Page({
    */
   data: {
     imgUrl: api.ImgUrl,
-    phone: '',
-    code: ''
+    maskShow: false,
+    birthday: '',
+    sexList: ['男', '女'],
+    sexIndex: 0,
+    checked: {
+      name: '我已阅读并接受benefit《隐私政策》',
+      value: false
+    },
+    name: wx.getStorageSync('defaultName'),
+    phone: wx.getStorageSync('defaultPhone')
   },
-  inputPhone (e) {
+  bindDateChange(e) {
+    this.setData({
+      birthday: e.detail.value
+    })
+  },
+  bindSexChange(e) {
+    this.setData({
+      sexIndex: e.detail.value
+    })
+  },
+  read(e) {
+    this.setData({
+      maskShow: true
+    })
+  },
+  inputPhone(e) {
     this.setData({
       phone: e.detail.value
     })
   },
-  inputCode (e) {
+  inputCode(e) {
     this.setData({
       code: e.detail.value
-    })
-  },
-  sendCode () {
-    if (!this.data.phone) {
-      this.showModal({msg: '请输入手机号码！'})
-      return false
-    }
-    let params = {
-      mobile: this.data.phone
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.SendCode, params,'post').then(res=>{
-      wx.hideLoading()
-      if(res.ret_code == 0) {
-        this.showModal({ msg: '验证码发送成功！' })
-      } else {
-        wx.showToast({ title: res.err_msg, icon: 'none' })
-      }
-    }).catch(err=>{
-      console.log(err)
-      wx.hideLoading()
     })
   },
   //报错 
@@ -48,33 +50,39 @@ Page({
       icon: 'none'
     })
   },
-  formSubmit () {
-    console.log(this.data)
-    if (this.data.phone=='') {
-      this.showModal({ msg: '请输入手机号码！' })
-      return false
-    } else if (this.data.code==''){
-      this.showModal({ msg: '请输入验证码！' })
-      return false
-    }
+  submit() {
     let params = {
+      userId: wx.getStorageSync('userId'),
+      name: this.data.name,
       mobile: this.data.phone,
-      code: this.data.code
+      birthday: this.data.birthday,
+      gender: this.data.sexIndex == 0 ? 1 : 2
     }
     wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.CheckCode,params,'post').then(res=>{
+    util.request(api.SaveInfo, params, 'post').then(res => {
       wx.hideLoading()
-      if (res.data == '0') {
-        this.showModal({ msg: '注册成功'})
-        wx.navigateTo({
-          url: '/pages/infoChange/infoChange',
+      if (res.ret_code == 0) {
+        wx.showModal({
+          content: '提交成功',
+          showCancel: false,
+          confirmColor: '#fe697f',
+          success(res) {
+            if (res.confirm) {
+              wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
+            }
+          }
         })
       } else {
-        wx.showToast({ title: '验证码错误', icon: 'none' })
+        wx.showToast({ title: res.err_msg, icon: 'none' })
       }
-    }).catch(err=>{
+    }).catch(err => {
       console.log(err)
       wx.hideLoading()
+    })
+  },
+  close() {
+    this.setData({
+      maskShow: false
     })
   },
   /**

@@ -7,10 +7,10 @@ App({
     user.checkLogin().then(res => {
       if (res) {
         console.log('app login--------------', res)
-        this.globalData.helpo = wx.getStorageSync('helpo');
         this.globalData.userInfo = wx.getStorageSync('userInfo');
         this.globalData.token = wx.getStorageSync('token');
         this.globalData.userId = wx.getStorageSync('userId');
+        this.globalData.memberType = wx.getStorageSync('memberType');
       } else {
         wx.getSetting({
           success: function (res) {

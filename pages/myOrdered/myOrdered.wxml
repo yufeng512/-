@@ -2,7 +2,7 @@
 <template is="headerTpl"></template>
 <view class="warpper">
   <view class="img-box">
-    <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image>
+    <!-- <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image> -->
   </view>
   <view class="content">
     <view class="my-ordered flex-cen">
@@ -10,7 +10,8 @@
       {{item.text}}
       </view>
     </view>
-    <view class="order-container">
+    <view class="select-tip" wx:if="{{list.length==0}}">暂时没有服务！</view>
+    <view class="order-container" wx:else>
       <scroll-view
         scroll-y
         style="height: 52vh;">
@@ -18,7 +19,7 @@
           <view class="text-box">
             <text wx:if="{{item.serviceName}}">{{item.serviceName}}</text>
             <text wx:if="{{item.counterName}}">预约门店:{{item.counterName}}</text>
-            <text wx:if="{{item.counterAddress}}">门店地址:{{item.counterAddress}}</text>
+            <text wx:if="{{item.counterAddress&&current!=1}}">门店地址:{{item.counterAddress}}</text>
             <text wx:if="{{item.staffName}}">修眉师:{{item.staffName}}</text>
             <text wx:if="{{item.bookingTime}}">预约时间:{{item.bookingTime}}</text>
           </view>

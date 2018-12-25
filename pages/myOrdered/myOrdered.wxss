@@ -1,13 +1,21 @@
 .warpper{
   position: relative;
   width: 100vw;
+  height: 100vh;
 }
 .warpper .img-box{
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1;
+  height: 100vh;
   width: 100vw;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url('http://3c1c5513bf327385.natapp.cc/benefit_xcx/statics/images/bg.png');
 }
 .warpper .content{
   position: absolute;
@@ -39,6 +47,12 @@
 .order-container .item-box .btn-box{
   position: relative;
   top: 50rpx;
+}
+.select-tip{
+  margin-top: 80rpx;
+  text-align: center;
+  color: #999999;
+  font-size: 26rpx;
 }
 .order-container .item-box .btn-box button{
   width: 36vw;

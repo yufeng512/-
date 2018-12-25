@@ -59,7 +59,7 @@ Page({
           confirmColor: '#fe697f',
           success(res) {
             if (res.confirm) {
-              wx.switchTab({ url: '/pages/index/index' })
+              wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
             }
           }
         })

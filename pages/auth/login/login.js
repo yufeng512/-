@@ -23,45 +23,16 @@ Page({
       withCredentials: false,
       success: res => {
         console.log("getAutho", res)
-        if (getCurrentPages().length > 2) {
-          //获取页面栈
-          let pages = getCurrentPages()
-          //给上一个页面设置状态
-          let curPage = pages[pages.length - 2];
-          let data = curPage.data;
-          curPage.setData({ 'isBack': true });
-        }else{
+        console.log("this.data.path:" + this.data.path)
         wx.switchTab({
-                url: '/pages/index/index',
-                success: function (res) { console.log("nav", res) },
-                fail: function (res) { },
-                complete: function (res) { },
-              })
-        }
-        var that = this;
-        console.log(String(decodeURIComponent(that.data.path)))
-
-        wx.switchTab({
-          url: decodeURIComponent(this.data.path),
+          url: '/pages/index/index',
           success: function (res) { console.log("nav", res) },
-          fail: function (res) {
-            console.log(res)
-          },
+          fail: function (res) { },
           complete: function (res) { },
         })
       },
       complete: function (data) {
-        // 执行登陆
-        user.loginByWeixin().then(res => {
-          console.log(res.data)
-          app.globalData.helpo = res.data.helpo;
-          app.globalData.userInfo = res.data.userInfo;
-          app.globalData.token = res.data.token;
-        }
-        ).catch((err) => {
-          console.log(err)
-        });
-
+        //执行登陆
       }
     })
 
