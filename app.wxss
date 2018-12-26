@@ -173,7 +173,6 @@ button:after {
 .header-box{
   position: relative;
   width: 100vw;
-  /* height: 100rpx; */
   z-index: 3;
 }
 .header-box .menu{

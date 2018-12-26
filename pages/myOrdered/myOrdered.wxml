@@ -2,7 +2,7 @@
 <template is="headerTpl"></template>
 <view class="warpper">
   <view class="img-box">
-    <!-- <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image> -->
+    <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image>
   </view>
   <view class="content">
     <view class="my-ordered flex-cen">
@@ -24,7 +24,7 @@
             <text wx:if="{{item.bookingTime}}">预约时间:{{item.bookingTime}}</text>
           </view>
           <view class="btn-box">
-            <button data-id="{{item.bookId}}" bindtap="goEvaluate">{{current==1?'评价':'修改'}}</button>
+            <button data-id="{{item.bookId}}" catchtap="goEvaluate">{{current==1?'评价':'修改'}}</button>
           </view>
         </view>
       </scroll-view>

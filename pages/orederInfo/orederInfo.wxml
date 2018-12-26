@@ -43,12 +43,23 @@
           </view>
           <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
         </view>
+        <!-- 服务渠道 -->
+        <view class="item flex-start">
+          <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
+          <view class="select-box">
+            <picker bindchange="bindChannelChange" mode="selector" range-key="{{'channelName'}}" value="{{channelIndex}}" range="{{channelList}}" >
+            <view class="picker" wx:if='{{!channelList[channelIndex].channelName}}'>请选择渠道</view>
+              <view class="picker" wx:else>{{channelList[channelIndex].channelName}}</view>
+            </picker>
+          </view>
+          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
+        </view>
         <!-- 服务门店 -->
         <view class="item flex-start">
           <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
           <view class="select-box">
-            <picker bindchange="bindStoreChange" mode="selector" range-key="{{'address1'}}" value="{{storeIndex}}" range="{{storeList}}" >
-            <view class="picker" wx:if='{{!storeList[storeIndex].address1}}'>请先选择门店</view>
+            <picker bindchange="bindStoreChange" mode="selector" range-key="{{'storeAddress'}}" value="{{storeIndex}}" range="{{storeList}}" >
+            <view class="picker" wx:if='{{!storeList[storeIndex].address1}}'>请选择门店</view>
               <view class="picker" wx:else>{{storeList[storeIndex].address1}}</view>
             </picker>
           </view>
@@ -75,14 +86,6 @@
             </picker>
           </view>
           <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <view class="check-box">
-          <checkbox-group bindchange="checkboxChange">
-            <label class="checkbox" wx:for="{{checkedList}}" wx:key="index">
-              <checkbox value="{{item.value}}" color="#fe697f" checked="{{item.checked}}" />
-            </label>
-            <text bindtap="read">我确认已阅读贝玲妃眉吧预约须知,并同意相关条款！</text>  
-          </checkbox-group>
         </view>
         <view class="btn-box">
           <button form-type='submit'>{{bookId?'确认修改':'立即预约'}}</button>

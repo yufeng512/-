@@ -21,6 +21,7 @@ function loginByWeixin() {
         if (res.ret_code == 0) {
               console.log("user.js loginByWeiXin:",res.data)
               //存储用户信息
+              wx.setStorageSync('memberType', res.data.memberType);
               wx.setStorageSync('userInfo', res.data.userInfo);
               wx.setStorageSync('token', res.data.token);
               wx.setStorageSync('userId', res.data.userId);

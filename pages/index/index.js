@@ -8,22 +8,45 @@ Page({
    * 页面的初始数据
    */
   data: {
+    imgList: ['/images/128.png', '/images/168.png','/images/208.png'],
+    defaultBorder: '/images/border.png',
     imgUrl: api.ImgUrl,
     serverList: [],
     severIndex: 0,
-    show: false
+    show: false,
+    imgShow: false
   },
   bindServeChange (e) {
+    let index = e.detail.value,imgName = ''
     this.setData({
-      severIndex: e.detail.value
+      severIndex: e.detail.value,
+      bgGif: imgName
     })
   },
   goOrderInfo () {
-    let serviceCode = this.data.serverList[this.data.severIndex].serviceCode
+    let serviceCode = this.data.serverList[this.data.severIndex].serviceCode,
+        severIndex = this.data.severIndex,
+        self = this,
+        imgName = '';
+    if (severIndex == 0) {
+      imgName = api.ImgUrl + '128.gif'
+    } else if (severIndex == 1) {
+      imgName = api.ImgUrl + '168.gif'
+    } else if (severIndex == 2) {
+      imgName = api.ImgUrl + '208.gif'
+    }
+    this.setData({
+      defaultBorder: '/images/border-gif.gif'
+    })
     if (serviceCode){
-      wx.navigateTo({
-        url: '/pages/orederInfo/orederInfo?serviceCode=' + serviceCode,
-      })
+      setTimeout(function () {
+        self.setData({
+          defaultBorder: '/images/border.png'
+        })
+        wx.navigateTo({
+          url: '/pages/orederInfo/orederInfo?serviceCode=' + serviceCode,
+        })
+      }, 2000) 
     }else{
       wx.showToast({
         title: '请选择服务项目！',
@@ -47,35 +70,31 @@ Page({
       wx.hideLoading()
     })
   },
+  bindSwiperChange (e) {
+    this.setData({
+      severIndex: e.detail.current
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    user.checkLogin().then(res => {
-      console.log('res++++++++++++++', res)
-      if (res) {
-        this.getData()
-      } else {
-        user.loginByWeixin().then(data => {
-          console.log('data++++++++++', data)
-          this.getData()
-        }).catch(err => {
-          wx.showLoading({ title: err, mask: true })
-        })
-      }
-    })
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
-    
   },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    user.checkLogin().then(res => {
+      if (res) {
+        this.getData()
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -95,9 +114,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.getData(() => {
-      util.refresh()
-    })
   },
 
   /**

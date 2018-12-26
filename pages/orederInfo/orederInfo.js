@@ -10,6 +10,8 @@ Page({
     imgUrl: api.ImgUrl,
     serverList: [],
     severIndex: null,
+    channelList: [],
+    channelIndex: null,
     storeList: [],
     storeIndex: null,
     staffList: [],
@@ -23,12 +25,10 @@ Page({
     name: '',
     phone: '',
     region: '',
-    checked: false,
     date: '',
     day: '',
     timeFrom:'',
     timeTo:'',
-    checkedList: [{value: false,checked: false}],
     maskShow: false,
     bookId: '',
     latitude: 0,
@@ -54,10 +54,33 @@ Page({
       wx.hideLoading()
     })
   },
-  getStoreList(counterCode, serviceCode) {
+  getChannelList(channelCode) {
+    util.request(api.ChannelList, {}, 'get').then(res=>{
+      if(res.ret_code==0){
+        if (channelCode){
+          res.data.list.forEach((item,i)=>{
+            if (item.channelCode == channelCode){
+              this.setData({
+                channelIndex: i,
+                channelList: res.data.list
+              })
+            }
+          })
+        }else{
+          this.setData({
+            channelList: res.data.list
+          })
+        }
+        
+      }
+    })
+  },
+  getStoreList(counterCode, serviceCode,channelCode) {
+    let index = this.data.severIndex,list = [];
     let params = {
-      serviceCode: serviceCode?serviceCode:this.data.serverList[this.data.severIndex].serviceCode,
+      serviceCode: serviceCode ? serviceCode : this.data.serverList[index].serviceCode,
       city: this.data.region,
+      channelCode: channelCode ? channelCode:this.data.channelList[this.data.channelIndex].channelCode,
       longitude: this.data.longitude,
       latitude: this.data.latitude
     }
@@ -66,17 +89,24 @@ Page({
       console.log(res)
       wx.hideLoading()
       if (res.ret_code == 0) {
+        res.data.list.forEach(item=>{
+          list.push({
+            storeAddress: item.address1 + ' ' + item.distance +'KM',
+            address1: item.address1,
+            counterCode: item.counterCode
+          })
+        })
         if(counterCode) {
           res.data.list.forEach((item, i) => {
             if (item.counterCode == counterCode) {
               this.setData({
                 storeIndex: i,
-                storeList: res.data.list
+                storeList: list
               })
             }
           })
         }else{
-          this.setData({ storeList: res.data.list })
+          this.setData({ storeList: list })
         }
       }
     }).catch(err => { 
@@ -120,6 +150,7 @@ Page({
       if(res.ret_code == 0){
         let serviceCode = res.data.serviceCode,
             counterCode = res.data.counterCode,
+            channelCode = res.data.channelCode,
             staffCode = res.data.staffCode;
         this.setData({
           date: res.data.bookTime,
@@ -130,12 +161,23 @@ Page({
           timeTo: res.data.timeTo
         })
         this.getServiceList(serviceCode)
-        this.getStoreList(counterCode,serviceCode) 
+        this.getChannelList(channelCode)
+        this.getStoreList(counterCode, serviceCode, channelCode) 
         this.getStaffList(staffCode, serviceCode, counterCode) 
       }
     }).catch(err => {
       console.log(err)
       wx.hideLoading()
+    })
+  },
+  getLastAddress () {
+    util.request(api.LastBook, {}, 'get').then(res=>{
+      console.log(res)
+      if (res.ret_code == 0) {
+        this.setData({
+          region: res.data.city
+        })
+      }
     })
   },
   /**
@@ -154,7 +196,8 @@ Page({
     }
     this.initValidate()
     this.getLocation()
-    
+    this.getLastAddress()
+    this.getChannelList()
   },
   getLocation() {
     let self = this
@@ -168,17 +211,6 @@ Page({
           latitude: latitude,
           longitude: longitude
         })
-        // wx.showModal({
-        //   title: '获取到当前的经纬度',
-        //   content: '经度：' + longitude + '，纬度：' + latitude,
-        //   success: function (res) {
-        //     if (res.confirm) {
-        //       console.log('用户点击确定')
-        //     } else if (res.cancel) {
-        //       console.log('用户点击取消')
-        //     }
-        //   }
-        // })
       }
     })
   },
@@ -191,6 +223,11 @@ Page({
     this.setData({
       region: e.detail.value[1]
     })
+  },
+  bindChannelChange (e) {
+    this.setData({
+      channelIndex: e.detail.value
+    })
     this.getStoreList()
   },
   bindStoreChange (e) {
@@ -202,12 +239,6 @@ Page({
   bindStaffChange (e) {
     this.setData({
       staffIndex: e.detail.value
-    })
-  },
-  checkboxChange (e){
-    console.log(e)
-    this.setData({
-      checked: e.detail.value[0]
     })
   },
   read (e) {
@@ -382,8 +413,7 @@ Page({
   },
   getStaffListTime (daylist) {
     let val = this.data.date.split('-'),
-        list = daylist.filter(item => item.day != '-');
-    console.log(list)
+        list = daylist.filter(item => item.day != '-')
     let params = {
       startDay: val[0] + val[1] + list[0].day,
       endDay: val[0] + val[1] + list[list.length-1].day,
@@ -438,6 +468,7 @@ Page({
       mobile: this.data.phone, 
       city: this.data.region,  
       counterCode: this.data.storeList[this.data.storeIndex].counterCode,
+      channelCode: this.data.channelList[this.data.channelIndex].channelCode,
       serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
       staffCode: this.data.staffList[this.data.staffIndex].staffCode,
       serviceDate: this.data.day,
@@ -490,7 +521,7 @@ Page({
           confirmColor: '#fe697f',
           success(res) {
             if (res.confirm) {
-              wx.switchTab({ url: '/pages/index/index' })
+              wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
             }
           }
         })

@@ -2,17 +2,36 @@
   <import src="/template/header-tpl.wxml" />
   <template is="headerTpl"></template>
   <view class="warpper">
+  <view class="swiper-up">
+      <swiper class="swiper"  vertical="{{true}}" bindchange="bindSwiperChange">
+        <block>
+          <swiper-item >
+            <image mode="widthFix" src="/images/128.png"></image>
+          </swiper-item>
+          <swiper-item>
+            <image mode="widthFix" src="/images/168.png"></image>
+          </swiper-item>
+          <swiper-item>
+            <image mode="widthFix" src="/images/208.png"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
     <view class="img-box">
-      <image mode="widthFix" src="{{imgUrl+'new.gif'}}"></image>
+      <image mode="widthFix" src="{{defaultBorder}}"></image>
+    </view>
+    <view class="show-box">
+      <image mode="widthFix" src="{{imgList[severIndex]}}"></image>
     </view>
     <view class="content">
       <view class="item flex-start">
+        <view class="item-img"><image mode="widthFix" src="/images/select-service.png"></image></view>
         <view class="select-box">
-          <picker bindchange="bindServeChange" mode="selector" range-key="{{'serviceName'}}" value="{{severIndex}}" range="{{serverList}}">
-            <view class="picker">{{serverList[severIndex].serviceName}}</view>
-          </picker>
+          <!-- <picker bindchange="bindServeChange" mode="selector" range-key="{{'serviceName'}}" value="{{severIndex}}" range="{{serverList}}"> -->
+            <!-- <view class="picker">{{serverList[severIndex].serviceName}}</view> -->
+            <view class="picker">滑动选择服务</view>
+          <!-- </picker> -->
         </view>
-        <!-- <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view> -->
       </view>
       <view bindtap='goOrderInfo'>
         <image mode="widthFix" src="{{imgUrl+'liji-btn.png'}}"></image>

@@ -4,6 +4,7 @@ App({
   onLaunch: function () {
     console.log('onlaunch');
     //获取用户的登录信息
+    
     user.checkLogin().then(res => {
       if (res) {
         console.log('app login--------------', res)

@@ -10,17 +10,10 @@
   z-index: 1;
   width: 100vw;
 }
-.warpper .img-tag{
-  position: absolute;
-  top: 13vh;
-  left: 18vw;
-  width: 36vw;
-  z-index: 2;
-}
 .warpper .content{
   position: absolute;
   width: 100vw;
-  top: 960rpx;
+  top: 800rpx;
   z-index: 2;
 }
  .warpper .content .details-box{
@@ -43,7 +36,7 @@
   color: #333333;
 }
 .map{
-  margin-top: 40rpx;
+  margin: 80rpx 0;
   width: 100vw;
   padding: 0 5vw;
 }

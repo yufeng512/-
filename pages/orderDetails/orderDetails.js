@@ -11,38 +11,10 @@ Page({
     counterAddress: '',
     time: '',
     bookId: '',
-    imgUrl: api.ImgUrl,
-    markers: [{
-      iconPath: '',
-      id: 0,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      width: 50,
-      height: 50
-    }],
-    polyline: [{
-      points: [{
-        longitude: 113.3245211,
-        latitude: 23.10229
-      }, {
-        longitude: 113.324520,
-        latitude: 23.21229
-      }],
-      color: '#FF0000DD',
-      width: 2,
-      dottedLine: true
-    }],
-    controls: [{
-      id: 1,
-      iconPath: '',
-      position: {
-        left: 0,
-        top: 300 - 100,
-        width: 50,
-        height: 50
-      },
-      clickable: true
-    }]
+    imgUrl: '',
+    markers: [],
+    latitude: '',
+    longitude: '',
   },
   regionchange(e) {
     console.log(e.type)
@@ -72,11 +44,28 @@ Page({
             this.setData({
               counterName: item.counterName,
               counterAddress: item.address1,
-              counterPhone: item.phone
+              counterPhone: item.phone,
+              latitude: item.latitude,
+              longitude: item.longitude,
+              markers: [{
+                latitude: item.latitude,
+                longitude: item.longitude,
+                callout: {
+                  content: item.counterName,
+                  color: '#333333',
+                  fontSize: 12,
+                  borderRadius: 2,
+                  padding: 5,
+                  display: 'ALWAYS',
+                },
+                width: 50,
+                height: 50
+              }]
             })
           }
         })
       }
+      console.log(this.data)
     }).catch(err => {
       console.log(err)
       wx.hideLoading()
@@ -95,6 +84,34 @@ Page({
           time: res.data.bookTime
         })
         this.getStoreList()
+        this.getServiceList(res.data.serviceCode)
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+    })
+  },
+  getServiceList(serviceCode) {
+    wx.showLoading({ title: '加载中', mask: true })
+    util.request(api.ServiceList, {}, 'get').then(res => {
+      wx.hideLoading()
+      if (res.ret_code == 0) {
+        let list = res.data.list
+        list.forEach((item, i) => {
+          if (item.serviceCode == '602020057413') {
+            this.setData({
+              imgUrl: api.ImgUrl + '128.gif'
+            })
+          } else if (item.serviceCode == '602020057415'){
+            this.setData({
+              imgUrl: api.ImgUrl + '168.gif'
+            })
+          } else if (item.serviceCode =='602020057417'){
+            this.setData({
+              imgUrl: api.ImgUrl + '208.gif'
+            })
+          }
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -106,7 +123,6 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    this.getdd()
     this.getBookList(options)
   },
   /**
@@ -114,7 +130,7 @@ Page({
    */
   onReady: function () {
     console.log('111111111111111111')
-    
+    this.mapCtx = wx.createMapContext('myMap')
   },
 
   /**

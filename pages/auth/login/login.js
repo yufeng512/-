@@ -24,15 +24,20 @@ Page({
       success: res => {
         console.log("getAutho", res)
         console.log("this.data.path:" + this.data.path)
-        wx.switchTab({
-          url: '/pages/index/index',
-          success: function (res) { console.log("nav", res) },
-          fail: function (res) { },
-          complete: function (res) { },
+        //执行登陆
+        user.loginByWeixin().then(data => {
+          console.log('data++++++', data)
+          wx.switchTab({
+            url: '/pages/index/index',
+            success: function (res) { console.log("nav", res) },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        }).catch(err => {
+          wx.showToast({ title: '登录 catch', icon: 'none' })
         })
       },
       complete: function (data) {
-        //执行登陆
       }
     })
 
