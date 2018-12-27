@@ -153,6 +153,9 @@
 .time-box .time-item .item-bg.current-bg {
   background:rgba(254,105,127,0.2);
 }
+.time-box .time-item .item-bg.current-bg text{
+  color:rgba(254,105,127,1);
+}
 .week-box,.day-box{
   margin: 20rpx 0;
   padding: 0 30rpx;

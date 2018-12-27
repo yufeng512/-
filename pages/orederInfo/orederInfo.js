@@ -29,6 +29,8 @@ Page({
     timeFrom:'',
     timeTo:'',
     maskShow: false,
+    smsCode: '',
+    showCode: false,
     bookId: '',
     latitude: 0,
     longitude: 0,
@@ -94,8 +96,8 @@ Page({
       if (res.ret_code == 0) {
         res.data.list.forEach(item=>{
           list.push({
-            storeAddress: item.address1 + ' ' + item.distance +'KM',
-            address1: item.address1,
+            storeAddress: item.counterName + ' ' + item.distance +'KM',
+            counterName: item.counterName,
             counterCode: item.counterCode
           })
         })
@@ -197,7 +199,6 @@ Page({
       })
       this.getBookList(options)
     }
-    this.initValidate()
     this.getLocation()
     this.getLastAddress()
     this.getChannelList()
@@ -234,6 +235,7 @@ Page({
     this.getStoreList()
   },
   bindStoreChange (e) {
+    console.log(e)
     this.setData({
       storeIndex: e.detail.value
     })
@@ -258,6 +260,61 @@ Page({
       name: e.detail.value
     })
     wx.setStorageSync('defaultName', e.detail.value)
+  },
+  inputCode (e) {
+    this.setData({
+      smsCode: e.detail.value
+    })
+  },
+  sendCode() {
+    if (!this.data.phone) {
+      this.showModal({ msg: '请输入手机号码！' })
+      return false
+    }
+    let params = {
+      mobile: this.data.phone
+    }
+    wx.showLoading({ title: '加载中', mask: true })
+    util.request(api.SendCode, params, 'post').then(res => {
+      wx.hideLoading()
+      if (res.ret_code == 0) {
+        this.showModal({ msg: '验证码发送成功！' })
+        this.setData({
+          showCode: true
+        })
+      } else {
+        wx.showToast({ title: res.err_msg, icon: 'none' })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+    })
+  },
+  codeSubmit() {
+    console.log(this.data)
+    if (this.data.smsCode == '') {
+      this.showModal({ msg: '请输入验证码！' })
+      return false
+    }
+    let params = {
+      mobile: this.data.phone,
+      code: this.data.smsCode
+    }
+    wx.showLoading({ title: '加载中', mask: true })
+    util.request(api.CheckCode, params, 'post').then(res => {
+      wx.hideLoading()
+      if (res.data == '0') {
+        this.showModal({ msg: '验证成功' })
+        this.setData({
+          showCode: false
+        })
+      } else {
+        wx.showToast({ title: '验证码错误', icon: 'none' })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+    })
   },
   bindDateChange(e) {
     if (this.data.storeIndex==null||this.data.staffIndex==null){
@@ -447,19 +504,6 @@ Page({
       console.log(err) 
     })
   },
-  //验证函数
-  initValidate() {
-    const rules = {
-      name: { required: true },
-      phone: { required: true, tel: true },
-      city: { required: true },
-    }
-    const messages = {
-      name: { required: '请输入名字' },
-      phone: { required: '请填写手机号', tel: '请填写正确的手机号' }
-    }
-    this.WxValidate = new WxValidate(rules, messages)
-  },
   formSubmit(e) {
     if (this.data.storeIndex == null || this.data.severIndex == null || this.data.staffIndex == null || this.data.name=='' || this.data.phone=='' || this.data.region==''){
       wx.showToast({title: '请填写所有表单数据！',icon:'none'})
@@ -475,6 +519,7 @@ Page({
       serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
       staffCode: this.data.staffList[this.data.staffIndex].staffCode,
       staffName: this.data.staffList[this.data.staffIndex].staffName,
+      smsCode: this.data.smsCode,
       serviceDate: this.data.day,
       timeFrom: this.data.timeFrom, 
       timeTo: this.data.timeTo,

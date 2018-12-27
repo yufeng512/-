@@ -28,8 +28,8 @@
         <view class="item flex-start">
           <view class="item-img"><image src='/images/phone.png' mode="widthFix"></image></view>
           <view class="input-box"><input name="phone" value="{{phone}}" type="number" maxlength="11" placeholder="请输入手机号"  bindblur="inputPhone" /></view>
-          <view class="item-img"><image></image></view>
-           <!-- <view class="item-bg" bindtap='sendCode'>验证码</view> -->
+          <!-- <view class="item-img"><image></image></view> -->
+            <view class="item-bg" bindtap='sendCode'>验证码</view> 
         </view>
         <!-- 城市 -->
         <view class="item flex-start">
@@ -60,8 +60,8 @@
           <view class="item-img"><image src="/images/store.png" mode="widthFix"></image></view>
           <view class="select-box">
             <picker bindchange="bindStoreChange" mode="selector" range-key="{{'storeAddress'}}" value="{{storeIndex}}" range="{{storeList}}" >
-            <view class="picker" wx:if='{{!storeList[storeIndex].address1}}'>选择门店</view>
-              <view class="picker" wx:else>{{storeList[storeIndex].address1}}</view>
+            <view class="picker" wx:if='{{!storeList[storeIndex].counterName}}'>选择门店</view>
+              <view class="picker" wx:else>{{storeList[storeIndex].counterName}}</view>
             </picker>
           </view>
           <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
@@ -130,7 +130,7 @@
       </view>
     </view>
     <view class="input-code" wx:if="{{showCode}}">
-      <input maxlength="4" placeholder="输入验证码" />
+    <input name="smsCode" value="{{smsCode}}" type="number" maxlength="4" placeholder="输入验证码"  bindblur="inputCode" />
       <button bindtap='codeSubmit'>确认</button>
     </view>
   </view>
