@@ -9,14 +9,15 @@
         <image mode="widthFix" src="{{imgUrl+'my-info.png'}}"></image>
       </view>
       <form bindsubmit="submit">
+      <!-- name -->
         <view class="item flex-start">
           <view class="item-img"><image src='/images/name.png' mode="widthFix"></image></view>
-          <view class="input-box"><input type="text" name="name" value="{{name}}" type="text" placeholder="默认预约姓名"  placeholder-class="place-holder"/></view>
+          <view class="input-box"><input type="text" name="name" value="{{name}}" type="text" placeholder="默认预约姓名"  placeholder-class="place-holder" bindblur="inputName"/></view>
         </view>
         <!-- 电话 -->
         <view class="item flex-start">
           <view class="item-img"><image src='/images/register-phone.png' mode="widthFix"></image></view>
-          <view class="input-box"><input maxlength="11" name="phone" value="{{phone}}" type="number" placeholder="默认预约手机号" placeholder-class="place-holder"/></view>
+          <view class="input-box"><input maxlength="11" name="phone" value="{{phone}}" type="number" placeholder="默认预约手机号" placeholder-class="place-holder" bindblur="inputPhone"/></view>
         </view>
         <!-- 年月日 -->
         <view class="item flex-start">

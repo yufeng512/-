@@ -23,23 +23,22 @@
         <text>{{time}}</text>
       </view>
     </view>
-    <view class="map">
-        <!-- bindmarkertap="markertap" 
-          polyline="{{polyline}}" 
-          bindregionchange="regionchange" 
-          controls="{{controls}}"
-          covers="{{covers}}"
-          bindcontroltap="controltap"-->
-        <map
-          id="myMap"
-          latitude="{{latitude}}"
-          longitude="{{longitude}}"
-          markers="{{markers}}"
-          show-location
-          style="width: 100%; height: 300px;"
-        ></map>
-        <image mode="widthFix" src='/images/go.png'></image>
+    <view class='map-container'>
+      <map
+        class="map"
+        id="myMap"
+        latitude="{{latitude}}"
+        longitude="{{longitude}}"
+        markers="{{markers}}"
+        show-location
+        style="width: 100%; height: 300px;">
+        
+      </map>
+      <cover-view class='map-img-tip' bindtap='gps'>
+        <cover-image src='/images/go.png' class='ten_l'></cover-image>
+      </cover-view>
     </view>
+    
     <!-- <view class="btn-box">
       <button bindtap="submit">确认</button>
     </view> -->

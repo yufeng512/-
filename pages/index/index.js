@@ -9,34 +9,18 @@ Page({
    */
   data: {
     imgList: [api.ImgUrl + '128.png', api.ImgUrl + '168.png', api.ImgUrl+'208.png'],
-    defaultBorder: api.ImgUrl+'border.png',
+    borderImg: api.ImgUrl+'border.png',
     imgUrl: api.ImgUrl,
     serverList: [],
     severIndex: 0,
-    show: false,
-    imgShow: false
-  },
-  bindServeChange (e) {
-    let index = e.detail.value,imgName = ''
-    this.setData({
-      severIndex: e.detail.value,
-      bgGif: imgName
-    })
+    show: false
   },
   goOrderInfo () {
     let serviceCode = this.data.serverList[this.data.severIndex].serviceCode,
         severIndex = this.data.severIndex,
-        self = this,
-        imgName = '';
-    if (severIndex == 0) {
-      imgName = api.ImgUrl + '128.gif'
-    } else if (severIndex == 1) {
-      imgName = api.ImgUrl + '168.gif'
-    } else if (severIndex == 2) {
-      imgName = api.ImgUrl + '208.gif'
-    }
-    this.setData({
-      defaultBorder: api.ImgUrl+'border-gif.gif'
+        self = this;
+    self.setData({
+      borderImg: api.ImgUrl+'border-gif.gif'
     })
     if (serviceCode){
       setTimeout(function () {
@@ -44,7 +28,7 @@ Page({
           url: '/pages/orederInfo/orederInfo?serviceCode=' + serviceCode,
         })
         self.setData({
-          defaultBorder: api.ImgUrl + 'border.png',
+          borderImg: api.ImgUrl + 'border.png',
         })
       }, 2000) 
     }else{
@@ -80,7 +64,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.getData()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -96,17 +79,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    user.checkLogin().then(res => {
-      if (res) {
-        this.getData()
-      }else{
-        user.loginByWeixin().then(res=>{
-          console.log('index res', res)
-        }).catch(err=>{
-          console.log('index cotch')
-        })
+    let self = this
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          //从数据库获取用户信息
+          user.loginByWeixin().then(res=>{
+            self.getData()
+          })
+        } else {
+          wx.navigateTo({
+            url: '/pages/auth/login/login'
+          })
+        }
       }
-    })
+    });
   },
   /**
    * 生命周期函数--监听页面隐藏

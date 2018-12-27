@@ -43,9 +43,9 @@ Page({
       phone: e.detail.value
     })
   },
-  inputCode(e) {
+  inputName(e) {
     this.setData({
-      code: e.detail.value
+      name: e.detail.value
     })
   },
   //报错 
@@ -81,7 +81,7 @@ Page({
         wx.showToast({ title: res.err_msg, icon: 'none' })
       }
     }).catch(err => {
-      console.log(err)
+      wx.showToast({ title: 'err', icon: 'none' })
       wx.hideLoading()
     })
   },

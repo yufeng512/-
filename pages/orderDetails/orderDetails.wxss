@@ -35,20 +35,30 @@
   font-size: 26rpx;
   color: #333333;
 }
+.map-container{
+  position: relative;
+  padding: 0 5vw;
+}
 .map{
   position: relative;
   margin: 120rpx 0;
-  width: 100vw;
-  padding: 0 5vw;
+  width: 90vw;
+  height: 60vh; 
 }
-.map image{
+.map-img-tip{
+  position: absolute;
+  width: 42vw;
+  height: 200rpx;
+  left: 0rpx;
+  top: -80rpx;
+}
+.map-img-tip .ten_l{
   position: absolute;
   left: 20rpx;
-  top: -80rpx;
-  width: 300rpx;
+  top: 0rpx;
+  width: 90%;
 }
-.map map{
-  width: 100%;
+.map{
   height: 100%;
   box-sizing: border-box;
   border-radius: 10rpx;

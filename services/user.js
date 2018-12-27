@@ -3,7 +3,7 @@
  */
 const util = require('../utils/util.js');
 const api = require('../config/api.js');
-
+var gio = require("../utils/gio-minp.js").default;
 
 /**
  * 调用微信登录
@@ -28,6 +28,7 @@ function loginByWeixin() {
               var timestamp = Date.parse(new Date());
               var expiration = timestamp + 11 * 60 * 60 * 1000;
               wx.setStorageSync('token_expiration', expiration);
+              gio('identify', res.data.openId, res.data.userId)
               // console.log("api.AuthLoginByWeixin:success,save data success")
               resolve(res);
           } else {

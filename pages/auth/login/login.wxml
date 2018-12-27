@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container" wx:if="{{isShow}}">
     <view class="page-cell">
      <form report-submit='true' bindsubmit='formSubmit'>
         <image src="../../../static/images/login-error.png" mode="widthFix"></image>

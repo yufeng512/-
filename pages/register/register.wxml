@@ -12,7 +12,7 @@
         <view class="item flex-start">
           <view class="item-img"><image src='/images/register-phone.png' mode="widthFix"></image></view>
           <view class="input-box">
-            <input type="number"  name='phone' value='{{phone}}' maxlength="11" placeholder="输入手机号" bindblur="inputPhone" placeholder-class="place-holder" bindblur="inputPhone"/>
+            <input type="number"  name='mobile' value='{{mobile}}' maxlength="11" placeholder="输入手机号" bindblur="inputPhone" placeholder-class="place-holder" bindblur="inputPhone"/>
           </view>
           <view class="item-btn" bindtap='sendCode'>验证码</view>
         </view>

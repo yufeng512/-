@@ -2,26 +2,26 @@
   <import src="/template/header-tpl.wxml" />
   <template is="headerTpl"></template>
   <view class="warpper">
-  <view class="swiper-up">
-      <swiper class="swiper"  vertical="{{true}}" bindchange="bindSwiperChange">
+    <view class="swiper-up">
+      <swiper class="swiper" vertical="{{true}}" bindchange="bindSwiperChange">
         <block>
           <swiper-item >
-            <image mode="widthFix" src="{{imgList[0]}}"></image>
+            <image mode="widthFix" src=""></image>
           </swiper-item>
           <swiper-item>
-            <image mode="widthFix" src="{{imgList[1]}}"></image>
+            <image mode="widthFix" src=""></image>
           </swiper-item>
           <swiper-item>
-            <image mode="widthFix" src="{{imgList[2]}}"></image>
+            <image mode="widthFix" src=""></image>
           </swiper-item>
         </block>
       </swiper>
     </view>
     <view class="img-box">
-      <image mode="widthFix" src="{{defaultBorder}}"></image>
+      <image mode="widthFix" lazy-load="{{true}}" src="{{borderImg}}"></image>
     </view>
     <view class="show-box">
-      <image mode="widthFix" src="{{imgList[severIndex]}}"></image>
+      <image mode="widthFix" lazy-load="{{true}}" src="{{imgList[severIndex]}}"></image>
     </view>
     <view class="content">
       <view class="item flex-start">

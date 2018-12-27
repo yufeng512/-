@@ -2,7 +2,6 @@
   "pages": [
     "pages/index/index",
     "pages/auth/login/login",
-    "pages/servicesOreder/servicesOreder",
     "pages/orederInfo/orederInfo",
     "pages/myOrdered/myOrdered",
     "pages/evaluate/evaluate",

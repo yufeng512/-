@@ -1,4 +1,3 @@
-import WxValidate from '../../utils/WxValidate.js'
 const util = require('../../utils/util.js')
 const api = require('../../config/api.js')
 Page({
@@ -30,8 +29,6 @@ Page({
     timeFrom:'',
     timeTo:'',
     maskShow: false,
-    showCode: false,
-    code: '',
     bookId: '',
     latitude: 0,
     longitude: 0,
@@ -39,56 +36,6 @@ Page({
   goIndex(){
     wx.switchTab({
       url: '/pages/index/index',
-    })
-  },
-  sendCode() {
-    if (!this.data.phone) {
-      this.showModal({ msg: '请输入手机号码！' })
-      return false
-    }
-    let params = {
-      mobile: this.data.phone
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.SendCode, params, 'post').then(res => {
-      wx.hideLoading()
-      if (res.ret_code == 0) {
-        this.showModal({ msg: '验证码发送成功！' })
-      } else {
-        wx.showToast({ title: res.err_msg, icon: 'none' })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.hideLoading()
-    })
-  },
-  codeSubmit() {
-    console.log(this.data)
-    if (this.data.phone == '') {
-      this.showModal({ msg: '请输入手机号码！' })
-      return false
-    } else if (this.data.code == '') {
-      this.showModal({ msg: '请输入验证码！' })
-      return false
-    }
-    let params = {
-      mobile: this.data.phone,
-      code: this.data.code
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.CheckCode, params, 'post').then(res => {
-      wx.hideLoading()
-      if (res.data == '0') {
-        this.showModal({ msg: '注册成功' })
-        wx.navigateTo({
-          url: '/pages/infoChange/infoChange',
-        })
-      } else {
-        wx.showToast({ title: '验证码错误', icon: 'none' })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.hideLoading()
     })
   },
   getServiceList(serviceCode) {
@@ -527,6 +474,7 @@ Page({
       channelCode: this.data.channelList[this.data.channelIndex].channelCode,
       serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
       staffCode: this.data.staffList[this.data.staffIndex].staffCode,
+      staffName: this.data.staffList[this.data.staffIndex].staffName,
       serviceDate: this.data.day,
       timeFrom: this.data.timeFrom, 
       timeTo: this.data.timeTo,
