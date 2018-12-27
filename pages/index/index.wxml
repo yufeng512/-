@@ -6,13 +6,13 @@
       <swiper class="swiper"  vertical="{{true}}" bindchange="bindSwiperChange">
         <block>
           <swiper-item >
-            <image mode="widthFix" src="/images/128.png"></image>
+            <image mode="widthFix" src="{{imgList[0]}}"></image>
           </swiper-item>
           <swiper-item>
-            <image mode="widthFix" src="/images/168.png"></image>
+            <image mode="widthFix" src="{{imgList[1]}}"></image>
           </swiper-item>
           <swiper-item>
-            <image mode="widthFix" src="/images/208.png"></image>
+            <image mode="widthFix" src="{{imgList[2]}}"></image>
           </swiper-item>
         </block>
       </swiper>

@@ -8,8 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgList: ['/images/128.png', '/images/168.png','/images/208.png'],
-    defaultBorder: '/images/border.png',
+    imgList: [api.ImgUrl + '128.png', api.ImgUrl + '168.png', api.ImgUrl+'208.png'],
+    defaultBorder: api.ImgUrl+'border.png',
     imgUrl: api.ImgUrl,
     serverList: [],
     severIndex: 0,
@@ -36,15 +36,15 @@ Page({
       imgName = api.ImgUrl + '208.gif'
     }
     this.setData({
-      defaultBorder: '/images/border-gif.gif'
+      defaultBorder: api.ImgUrl+'border-gif.gif'
     })
     if (serviceCode){
       setTimeout(function () {
-        self.setData({
-          defaultBorder: '/images/border.png'
-        })
         wx.navigateTo({
           url: '/pages/orederInfo/orederInfo?serviceCode=' + serviceCode,
+        })
+        self.setData({
+          defaultBorder: api.ImgUrl + 'border.png',
         })
       }, 2000) 
     }else{
@@ -59,6 +59,7 @@ Page({
     wx.showLoading({ title: '加载中', mask: true })
     util.request(api.ServiceList, {}, 'get').then(res => {
       wx.hideLoading()
+      console.log('index res', res)
       if (res.ret_code == 0) {
         this.setData({
           serverList: res.data.list,
@@ -66,7 +67,7 @@ Page({
         })
       }
     }).catch(err=>{
-      console.log(err)
+      console.log('index err',err)
       wx.hideLoading()
     })
   },
@@ -79,12 +80,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+    // this.getData()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
+  },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
   },
   /**
    * 生命周期函数--监听页面显示
@@ -93,6 +99,12 @@ Page({
     user.checkLogin().then(res => {
       if (res) {
         this.getData()
+      }else{
+        user.loginByWeixin().then(res=>{
+          console.log('index res', res)
+        }).catch(err=>{
+          console.log('index cotch')
+        })
       }
     })
   },

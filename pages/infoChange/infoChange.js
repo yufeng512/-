@@ -18,6 +18,11 @@ Page({
     name: wx.getStorageSync('defaultName'),
     phone: wx.getStorageSync('defaultPhone')
   },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   bindDateChange(e) {
     this.setData({
       birthday: e.detail.value

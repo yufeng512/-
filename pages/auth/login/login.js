@@ -28,10 +28,7 @@ Page({
         user.loginByWeixin().then(data => {
           console.log('data++++++', data)
           wx.switchTab({
-            url: '/pages/index/index',
-            success: function (res) { console.log("nav", res) },
-            fail: function (res) { },
-            complete: function (res) { },
+            url: '/pages/index/index'
           })
         }).catch(err => {
           wx.showToast({ title: '登录 catch', icon: 'none' })

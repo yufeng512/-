@@ -10,12 +10,6 @@
   right: 0;
   bottom: 0;
   z-index: 1;
-  /* height: 100vh;
-  width: 100vw;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-image: url('https://booking.benefitbrows.cn/benefit_xcx/statics/images/bg.png'); */
 }
 .warpper .content{
   position: absolute;
@@ -32,11 +26,12 @@
   padding: 0 15vw;
 }
 .order-container .item-box{
-  width: 70vw;
   padding: 2vh 3vw;
   border-radius: 6rpx;
+  margin-right: 15rpx;
   margin-bottom: 80rpx;
-  border: 1rpx solid rgba(254,105,127,0.4); 
+  border:8rpx solid #333333;
+  box-shadow:10rpx 10rpx 10rpx #eea0ae;
 }
 .order-container .item-box .text-box text{
   display: block;
@@ -56,9 +51,9 @@
 }
 .order-container .item-box .btn-box button{
   width: 36vw;
-  height: 60rpx;
+  height: 72rpx;
   font-size: 26rpx;
-  line-height: 60rpx;
+  line-height: 72rpx;
   font-weight: bolder;
   color: #333333;
   background-repeat: no-repeat;

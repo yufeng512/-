@@ -36,9 +36,16 @@
   color: #333333;
 }
 .map{
-  margin: 80rpx 0;
+  position: relative;
+  margin: 120rpx 0;
   width: 100vw;
   padding: 0 5vw;
+}
+.map image{
+  position: absolute;
+  left: 20rpx;
+  top: -80rpx;
+  width: 300rpx;
 }
 .map map{
   width: 100%;

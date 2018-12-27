@@ -16,6 +16,11 @@ Page({
     latitude: '',
     longitude: '',
   },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   regionchange(e) {
     console.log(e.type)
   },

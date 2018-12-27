@@ -43,6 +43,11 @@ Page({
       })
     }
   },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   submit () {
     let params = {
       bookId: this.data.bookId,

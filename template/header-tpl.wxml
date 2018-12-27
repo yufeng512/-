@@ -1,7 +1,8 @@
 <template name="headerTpl">
   <view class="header-box">
     <image mode="widthFix" src="https://booking.benefitbrows.cn/benefit_xcx/statics/images/head-img.png"></image>
-    <button class="menu" open-type="share">
+    <!-- <button class="menu" open-type="share"> -->
+    <button class="menu" bindtap='goIndex'>
       <image src="/images/menu.png"></image>
     </button>
   </view>

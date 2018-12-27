@@ -27,7 +27,7 @@ page{
 .warpper .show-box{
   position: absolute;
   left: 20vw;
-  top: 100rpx;
+  top: 90rpx;
   width: 60vw;
   height: 660rpx;
   z-index: 2;

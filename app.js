@@ -4,7 +4,6 @@ App({
   onLaunch: function () {
     console.log('onlaunch');
     //获取用户的登录信息
-    
     user.checkLogin().then(res => {
       if (res) {
         console.log('app login--------------', res)
@@ -40,18 +39,18 @@ App({
     console.log(opt.scene)
   },
 
-  globalData: {
-    emptyInfo: {
-      nickName: 'Hi,游客',
-      userName: '点击去登录',
-      avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
-    },
-    userInfo: {
-      nickName: 'Hi,游客',
-      userName: '点击去登录',
-      avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
-    },
-    token: '',
-  }
+  // globalData: {
+  //   emptyInfo: {
+  //     nickName: 'Hi,游客',
+  //     userName: '点击去登录',
+  //     avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+  //   },
+  //   userInfo: {
+  //     nickName: 'Hi,游客',
+  //     userName: '点击去登录',
+  //     avatarUrl: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+  //   },
+  //   token: '',
+  // }
 
 })

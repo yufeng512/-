@@ -11,9 +11,9 @@
         <view class="item flex-start">
           <view class="item-img"><image mode="widthFix" src="/images/server.png"></image></view>
           <view class="select-box">
-            <picker bindchange="bindServeChange" mode="selector" range-key="{{'serviceName'}}" value="{{severIndex}}" range="{{serverList}}">
-              <view class="picker" wx:if="{{serverList[severIndex].serviceName==undefiend}}">请选择服务</view>
-              <view class="picker" wx:else>{{serverList[severIndex].serviceName}}</view>
+            <picker bindchange="bindServeChange" mode="selector" range-key="{{'activeName'}}" value="{{severIndex}}" range="{{serverList}}">
+              <view class="picker" wx:if="{{serverList[severIndex].activeName==undefiend}}">请选择服务</view>
+              <view class="picker" wx:else>{{serverList[severIndex].activeName}}</view>
             </picker>
           </view>
           <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
@@ -21,23 +21,24 @@
         <!-- 姓名 -->
         <view class="item flex-start">
           <view class="item-img"><image src='/images/user.png' mode="widthFix"></image></view>
-          <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="输入姓名" bindblur="inputName" /></view>
+          <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="请输入姓名" bindblur="inputName" /></view>
           <view class="item-img"><image></image></view>
         </view>
         <!-- 电话 -->
         <view class="item flex-start">
           <view class="item-img"><image src='/images/phone.png' mode="widthFix"></image></view>
-          <view class="input-box"><input name="phone" value="{{phone}}" type="number" maxlength="11" placeholder="输入手机号"  bindblur="inputPhone" /></view>
+          <view class="input-box"><input name="phone" value="{{phone}}" type="number" maxlength="11" placeholder="请输入手机号"  bindblur="inputPhone" /></view>
           <view class="item-img"><image></image></view>
+           <!-- <view class="item-bg" bindtap='sendCode'>验证码</view> -->
         </view>
         <!-- 城市 -->
         <view class="item flex-start">
-          <view class="item-img"><image src="/images/city.png" mode="widthFix"></image></view>
+          <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
           <view class="select-box" >
             <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
               <view class="picker">
                 <text wx:if='{{region.length}}'>{{region}}</text>
-                <text wx:else>选择城市</text>
+                <text wx:else>请选择城市</text>
               </view>
             </picker>
           </view>
@@ -45,10 +46,10 @@
         </view>
         <!-- 服务渠道 -->
         <view class="item flex-start">
-          <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
+          <view class="item-img"><image src="/images/city.png" mode="widthFix"></image></view>
           <view class="select-box">
             <picker bindchange="bindChannelChange" mode="selector" range-key="{{'channelName'}}" value="{{channelIndex}}" range="{{channelList}}" >
-            <view class="picker" wx:if='{{!channelList[channelIndex].channelName}}'>请选择渠道</view>
+            <view class="picker" wx:if='{{!channelList[channelIndex].channelName}}'>选择渠道</view>
               <view class="picker" wx:else>{{channelList[channelIndex].channelName}}</view>
             </picker>
           </view>
@@ -56,10 +57,10 @@
         </view>
         <!-- 服务门店 -->
         <view class="item flex-start">
-          <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
+          <view class="item-img"><image src="/images/store.png" mode="widthFix"></image></view>
           <view class="select-box">
             <picker bindchange="bindStoreChange" mode="selector" range-key="{{'storeAddress'}}" value="{{storeIndex}}" range="{{storeList}}" >
-            <view class="picker" wx:if='{{!storeList[storeIndex].address1}}'>请选择门店</view>
+            <view class="picker" wx:if='{{!storeList[storeIndex].address1}}'>选择门店</view>
               <view class="picker" wx:else>{{storeList[storeIndex].address1}}</view>
             </picker>
           </view>
@@ -70,7 +71,7 @@
           <view class="item-img"><image src="/images/beautician.png" mode="widthFix"></image></view>
           <view class="select-box">
             <picker bindchange="bindStaffChange" mode="selector"  value="{{staffIndex}}" range-key="{{'staffName'}}" range="{{staffList}}">
-              <view class="picker" wx:if="{{!staffList[staffIndex].staffName}}">请选择美容师</view>
+              <view class="picker" wx:if="{{!staffList[staffIndex].staffName}}">选择修眉师</view>
               <view class="picker" wx:else>{{staffList[staffIndex].staffName}}</view>
             </picker>
           </view>
@@ -81,7 +82,7 @@
           <view class="item-img"><image src="/images/time.png" mode="widthFix"></image></view>
           <view class="select-box">
             <picker mode="date" value="{{date}}" bindchange="bindDateChange" fields="month" >
-              <view class="picker" wx:if="{{date == ''}}">请选择日期</view>
+              <view class="picker" wx:if="{{date == ''}}">选择服务时间</view>
               <view class="picker" wx:else>{{date}}</view>
             </picker>
           </view>
@@ -127,6 +128,10 @@
           <button bindtap="submit">确认提交</button>
         </view>
       </view>
+    </view>
+    <view class="input-code" wx:if="{{showCode}}">
+      <input maxlength="4" placeholder="输入验证码" />
+      <button bindtap='codeSubmit'>确认</button>
     </view>
   </view>
 </form>

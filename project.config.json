@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -52,12 +52,6 @@
 					"query": ""
 				},
 				{
-					"id": 3,
-					"name": "预约确认",
-					"pathName": "pages/orderConfirm/orderConfirm",
-					"query": ""
-				},
-				{
 					"id": 4,
 					"name": "预约信息输入",
 					"pathName": "pages/orederInfo/orederInfo",
@@ -85,6 +79,12 @@
 					"id": -1,
 					"name": "个人信息",
 					"pathName": "pages/infoChange/infoChange",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "预约信息详情",
+					"pathName": "pages/orderDetails/orderDetails",
 					"query": ""
 				}
 			]

@@ -10,6 +10,11 @@ Page({
     phone: '',
     code: ''
   },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   inputPhone (e) {
     this.setData({
       phone: e.detail.value

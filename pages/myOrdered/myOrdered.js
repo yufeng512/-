@@ -12,6 +12,11 @@ Page({
     current: 1,
     list: []
   },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   selectStatus (e) {
     let index = e.currentTarget.dataset.status
     this.setData({
