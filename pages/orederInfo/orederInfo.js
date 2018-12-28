@@ -280,6 +280,7 @@ Page({
     wx.setStorageSync('defaultPhone', e.detail.value)
   },
   inputName (e) {
+    console.log(e.detail.value)
     this.setData({
       name: e.detail.value
     })

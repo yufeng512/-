@@ -4,7 +4,7 @@
   </view>
   <view class="warpper">
     <view class="swiper-up">
-      <swiper class="swiper" vertical="{{true}}" bindchange="bindSwiperChange">
+      <swiper class="swiper" vertical="{{true}}" circular='true' bindchange="bindSwiperChange">
         <block>
           <swiper-item >
             <image mode="widthFix" src=""></image>
