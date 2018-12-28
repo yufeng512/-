@@ -21,7 +21,7 @@
           <!-- 姓名 -->
           <view class="item flex-start">
             <view class="item-img"><image src='/images/user.png' mode="widthFix"></image></view>
-            <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="请输入姓名" bindinput="inputName" /></view>
+            <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="请输入姓名" bindblur="inputName" /></view>
           </view>
           <!-- 电话 -->
           <view class="item flex-start">

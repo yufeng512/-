@@ -280,11 +280,38 @@ Page({
     wx.setStorageSync('defaultPhone', e.detail.value)
   },
   inputName (e) {
-    console.log(e.detail.value)
-    this.setData({
-      name: e.detail.value
-    })
-    wx.setStorageSync('defaultName', e.detail.value)
+    let val = e.detail.value, 
+        isZH = /^[\u4e00-\u9fa5]+$/i.test(val),
+        pattern3 = new RegExp("[0-9]+");
+    if (pattern3.test(val)) {
+      wx.showToast({ title: '姓名不能输入数字！', icon: 'none' })
+      this.setData({ name: '' })
+      return false
+    }
+    if (isZH) {
+      if (val.length>10){
+        wx.showToast({title: '中文名字不能超过10个字符',icon: 'none'})
+        this.setData({name: ''})
+        return false
+      }else{
+        this.setData({
+          name: e.detail.value
+        })
+        wx.setStorageSync('defaultName', e.detail.value)
+      }
+    }else{
+      if (val.length > 20) {
+        wx.showToast({ title: '英文名字不能超过20个字符', icon: 'none' })
+        this.setData({ name: '' })
+        return false
+      }else{
+        this.setData({
+          name: e.detail.value
+        })
+        wx.setStorageSync('defaultName', e.detail.value)
+      }
+    }
+    
   },
   inputCode (e) {
     this.setData({
@@ -677,6 +704,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '眉吧服务预约',
+      path: 'pages/index/index',
+      imageUrl: '/static/images/share.jpg'
+    }
   }
 })

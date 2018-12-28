@@ -128,7 +128,8 @@ Page({
   onShareAppMessage() {
     return {
       title: '眉吧服务预约',
-      imageUrl: ''
+      path: 'pages/index/index',
+      imageUrl: '/static/images/share.jpg'
     }
   }
 })

@@ -26,7 +26,6 @@ Page({
         }
       })    
     }
-    console.log('judgeList111', this.data.judgeList )
   },
   goIndex() {
     wx.switchTab({
@@ -53,18 +52,19 @@ Page({
           evaluateList: list,
           judgeList: judgeList
         })
-        console.log(list)
       }
     })
   },
   submit () {
-    let params = this.data.judgeList,
-      isCheck = params.every(item=> item.questionAnswer != '')
-      params = JSON.stringify(params)
-      console.log(params)
+    let judgeList = this.data.judgeList,
+        params = {},
+        isCheck = judgeList.every(item=> item.questionAnswer != '')
+
     if (isCheck){
+      params.bookId = this.data.bookId,
+      params.survey = judgeList
       wx.showLoading({ title: '加载中', mask: true })
-      util.request(api.ServiceJudge, params , 'post').then(res => {
+      util.request(api.ServiceJudge, params, 'post').then(res => {
         wx.hideLoading()
         if (res.ret_code == 0) {
           wx.showModal({
@@ -146,6 +146,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '眉吧服务预约',
+      path: 'pages/index/index',
+      imageUrl: '/static/images/share.jpg'
+    }
   }
 })
