@@ -5,16 +5,20 @@
       <image mode="widthFix" src="{{imgUrl+'bg.png'}}"></image>
   </view>
   <view class="content">
-    <view class="evaluate-item" wx:for="{{evaluateList}}" wx:key="index" wx:for-item="item">
-      <view class="problem-title"> {{'Q'+(index+1)+'. '+item.problem}}</view>
-      <view class="problem-radio">
-        <radio-group class="radio-group" data-index="{{index}}" bindchange="radioChange">
-            <radio class="radio" wx:for-items="{{item.options}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}" color="#fe697f">
-                <text>{{item.name}}</text>
-            </radio>
-        </radio-group>
+    <scroll-view
+      scroll-y
+      style="height: 70vh;">
+      <view class="evaluate-item" wx:for="{{evaluateList}}" wx:key="index" wx:for-item="item">
+        <view class="problem-title"> {{'Q'+(index+1)+'. '+item.questionDesc}}</view>
+        <view class="problem-radio">
+          <radio-group class="radio-group" data-id="{{item.id}}" bindchange="radioChange">
+              <radio class="radio" wx:for-items="{{item.questionOption}}" wx:key="name" value="{{item.key}}" color="#fe697f">
+                  <text>{{item.key}}. {{item.value}}</text>
+              </radio>
+          </radio-group>
+        </view>
       </view>
-    </view>
+    </scroll-view>
     <view class="btn-box">
       <button bindtap='submit'>确认提交</button>
     </view>

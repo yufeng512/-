@@ -11,22 +11,23 @@
 }
 .warpper .content{
   position: absolute;
-  top: 200rpx;
+  top: 150rpx;
   z-index: 2;
   width: 100vw;
   padding: 0 15vw;
 }
 .evaluate-item{
-  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  background: rgba(255,255,255,0.1);
 }
 .problem-title{
-  font-size: 30rpx;
+  font-size: 28rpx;
   margin: 20rpx 0;
   font-weight: bold;
 }
 .radio {
-  display: inline-block;
-  width: 33%;
+  display: block;
+  margin-bottom: 20rpx;
   line-height: 40rpx;
 }
 .radio text{

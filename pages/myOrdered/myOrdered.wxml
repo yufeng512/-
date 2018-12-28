@@ -14,7 +14,7 @@
     <view class="order-container" wx:else>
       <scroll-view
         scroll-y
-        style="height: 52vh;">
+        style="height: 70vh;">
         <view class="item-box" wx:for="{{list}}" wx:key="index" data-bookId="{{item.bookId}}" wx:for-item="item"  bindtap="goDetails">
           <view class="text-box">
             <text wx:if="{{item.serviceName}}">{{item.serviceName}}</text>

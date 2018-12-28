@@ -31,6 +31,7 @@ Page({
     maskShow: false,
     smsCode: '',
     showCode: false,
+    showCodeBtn: true,
     bookId: '',
     latitude: 0,
     longitude: 0,
@@ -85,7 +86,7 @@ Page({
     let params = {
       serviceCode: serviceCode ? serviceCode : this.data.serverList[index].serviceCode,
       city: this.data.region,
-      channelCode: channelCode ? channelCode:this.data.channelList[this.data.channelIndex].channelCode,
+      counterChannel: channelCode ? channelCode : this.data.channelList[this.data.channelIndex].channelCode,
       longitude: this.data.longitude,
       latitude: this.data.latitude
     }
@@ -219,31 +220,54 @@ Page({
     })
   },
   bindServeChange (e) {
-    this.setData({
-      severIndex: e.detail.value
-    })
+    if (this.data.severIndex != e.detail.value){
+      this.setData({
+        severIndex: e.detail.value,
+        region: '',
+        storeList: [],
+        staffList: [],
+        storeIndex: null,
+        channelIndex: null,
+        staffIndex: null,
+        date: ''
+      })
+    }
   },
   bindRegionChange (e) {
-    this.setData({
-      region: e.detail.value[1]
-    })
+    if (this.data.region != e.detail.value[1]){
+      this.setData({
+        region: e.detail.value[1],
+        storeList: [],
+        staffList: [],
+        channelIndex: null,
+        storeIndex: null,
+        staffIndex: null,
+        date: ''
+      })
+    }
   },
   bindChannelChange (e) {
     this.setData({
-      channelIndex: e.detail.value
+      channelIndex: e.detail.value,
+      storeIndex: null,
+      staffIndex: null,
+      date: ''
     })
     this.getStoreList()
   },
   bindStoreChange (e) {
     console.log(e)
     this.setData({
-      storeIndex: e.detail.value
+      storeIndex: e.detail.value,
+      staffIndex: null,
+      date: ''
     })
     this.getStaffList()
   },
   bindStaffChange (e) {
     this.setData({
-      staffIndex: e.detail.value
+      staffIndex: e.detail.value,
+      date: ''
     })
   },
   read (e) {
@@ -266,22 +290,36 @@ Page({
       smsCode: e.detail.value
     })
   },
+  //手机验证
+  checkPhone(val) {
+    return /^1[34578]\d{9}$/.test(val)
+  },
   sendCode() {
-    if (!this.data.phone) {
-      this.showModal({ msg: '请输入手机号码！' })
+    let self = this
+    console.log(self.checkPhone(self.data.phone))
+    if (!self.data.phone || !self.checkPhone(self.data.phone)) {
+      self.showModal({ msg: '请输入正确的手机号码！' })
       return false
     }
     let params = {
-      mobile: this.data.phone
+      mobile: self.data.phone
     }
     wx.showLoading({ title: '加载中', mask: true })
     util.request(api.SendCode, params, 'post').then(res => {
       wx.hideLoading()
       if (res.ret_code == 0) {
-        this.showModal({ msg: '验证码发送成功！' })
-        this.setData({
-          showCode: true
-        })
+        wx.showModal({
+          content: '验证码发送成功！',
+          showCancel: false,
+          confirmColor: '#eea0ae',
+          success(res) {
+            if (res.confirm) {
+              self.setData({
+                showCode: true
+              })
+            }
+          }
+        })  
       } else {
         wx.showToast({ title: res.err_msg, icon: 'none' })
       }
@@ -296,24 +334,10 @@ Page({
       this.showModal({ msg: '请输入验证码！' })
       return false
     }
-    let params = {
-      mobile: this.data.phone,
-      code: this.data.smsCode
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.CheckCode, params, 'post').then(res => {
-      wx.hideLoading()
-      if (res.data == '0') {
-        this.showModal({ msg: '验证成功' })
-        this.setData({
-          showCode: false
-        })
-      } else {
-        wx.showToast({ title: '验证码错误', icon: 'none' })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.hideLoading()
+    this.showModal({ msg: '验证码已保存' })
+    this.setData({
+      showCode: false,
+      showCodeBtn: false
     })
   },
   bindDateChange(e) {
@@ -462,6 +486,11 @@ Page({
         if(i<10){i = '0'+i}
         dayList.push({ day: i, available: false})
       }
+      if (dayList.length<7){
+        for (var j = 0; j <= (7 - dayList.length); i++) {
+          dayList.push({ day: '-', available: false })
+        }
+      }
     }else{
       for (var i = 1; i <= n; i++) {
         if (i < 10) {i = '0' + i}
@@ -521,8 +550,8 @@ Page({
       staffName: this.data.staffList[this.data.staffIndex].staffName,
       smsCode: this.data.smsCode,
       serviceDate: this.data.day,
-      timeFrom: this.data.timeFrom, 
-      timeTo: this.data.timeTo,
+      timeFrom: this.data.timeFrom + ':00', 
+      timeTo: this.data.timeTo + ':00',
     }
     if (this.data.bookId) {
       this.updata(params)
@@ -539,7 +568,7 @@ Page({
         wx.showModal({
           content: '预约服务保存成功！',
           showCancel: false,
-          confirmColor: '#fe697f',
+          confirmColor: '#eea0ae',
           success(res) {
             if (res.confirm) {
               if (memberType == 0){
@@ -567,7 +596,7 @@ Page({
         wx.showModal({
           content: '预约服务更新成功！',
           showCancel: false,
-          confirmColor: '#fe697f',
+          confirmColor: '#eea0ae',
           success(res) {
             if (res.confirm) {
               wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
@@ -587,6 +616,7 @@ Page({
     wx.showModal({
       content: error.msg,
       showCancel: false,
+      confirmColor: '#eea0ae',
     })
   },
   submit(e) {
@@ -596,7 +626,7 @@ Page({
     } else {
       this.setData({
         maskShow: false,
-        date: this.data.date + ' ' + this.data.timeFrom + ' ' + this.data.timeTo
+        date: this.data.date + ' ' + this.data.timeFrom + '-' + this.data.timeTo
       })
     }
   },

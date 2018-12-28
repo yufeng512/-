@@ -1,137 +1,136 @@
-<import src="/template/header-tpl.wxml" />
-<template is="headerTpl"></template>
-<view class="tip"><text>请完善预约信息</text></view>
 <form bindsubmit="formSubmit">
   <view class="warpper">
-    <view class="img-box">
-      <image mode="widthFix" src="{{imgUrl+'info-bg.png'}}"></image>
-    </view>
-    <view class="content" wx:if="{{!maskShow}}">
-        <!-- 服务项目 -->
-        <view class="item flex-start">
-          <view class="item-img"><image mode="widthFix" src="/images/server.png"></image></view>
-          <view class="select-box">
-            <picker bindchange="bindServeChange" mode="selector" range-key="{{'activeName'}}" value="{{severIndex}}" range="{{serverList}}">
-              <view class="picker" wx:if="{{serverList[severIndex].activeName==undefiend}}">请选择服务</view>
-              <view class="picker" wx:else>{{serverList[severIndex].activeName}}</view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <!-- 姓名 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src='/images/user.png' mode="widthFix"></image></view>
-          <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="请输入姓名" bindblur="inputName" /></view>
-          <view class="item-img"><image></image></view>
-        </view>
-        <!-- 电话 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src='/images/phone.png' mode="widthFix"></image></view>
-          <view class="input-box"><input name="phone" value="{{phone}}" type="number" maxlength="11" placeholder="请输入手机号"  bindblur="inputPhone" /></view>
-          <!-- <view class="item-img"><image></image></view> -->
-            <view class="item-bg" bindtap='sendCode'>验证码</view> 
-        </view>
-        <!-- 城市 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
-          <view class="select-box" >
-            <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-              <view class="picker">
-                <text wx:if='{{region.length}}'>{{region}}</text>
-                <text wx:else>请选择城市</text>
-              </view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <!-- 服务渠道 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src="/images/city.png" mode="widthFix"></image></view>
-          <view class="select-box">
-            <picker bindchange="bindChannelChange" mode="selector" range-key="{{'channelName'}}" value="{{channelIndex}}" range="{{channelList}}" >
-            <view class="picker" wx:if='{{!channelList[channelIndex].channelName}}'>选择渠道</view>
-              <view class="picker" wx:else>{{channelList[channelIndex].channelName}}</view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <!-- 服务门店 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src="/images/store.png" mode="widthFix"></image></view>
-          <view class="select-box">
-            <picker bindchange="bindStoreChange" mode="selector" range-key="{{'storeAddress'}}" value="{{storeIndex}}" range="{{storeList}}" >
-            <view class="picker" wx:if='{{!storeList[storeIndex].counterName}}'>选择门店</view>
-              <view class="picker" wx:else>{{storeList[storeIndex].counterName}}</view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <!-- 服务美容师 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src="/images/beautician.png" mode="widthFix"></image></view>
-          <view class="select-box">
-            <picker bindchange="bindStaffChange" mode="selector"  value="{{staffIndex}}" range-key="{{'staffName'}}" range="{{staffList}}">
-              <view class="picker" wx:if="{{!staffList[staffIndex].staffName}}">选择修眉师</view>
-              <view class="picker" wx:else>{{staffList[staffIndex].staffName}}</view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <!-- 服务日期 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src="/images/time.png" mode="widthFix"></image></view>
-          <view class="select-box">
-            <picker mode="date" value="{{date}}" bindchange="bindDateChange" fields="month" >
-              <view class="picker" wx:if="{{date == ''}}">选择服务时间</view>
-              <view class="picker" wx:else>{{date}}</view>
-            </picker>
-          </view>
-          <view class="item-img"><image mode="widthFix" src="/images/drop-down.png"></image></view>
-        </view>
-        <view class="btn-box">
-          <button form-type='submit'>{{bookId?'确认修改':'立即预约'}}</button>
-        </view>
-    </view>
-    <view class="mask" wx:else>
-      <view class="select-box">
-        <view class="item flex-start">
-          <view class="item-btn" bindtap="preWeek">上一周</view>
-          <view class="select-box">
-              <picker mode="date" value="{{date}}" bindchange="bindMaskDateChange" fields="month">
-                <view class="picker">{{date}}</view>
+    <import src="/template/header-tpl.wxml" />
+    <template is="headerTpl"></template>
+    <view class="tip"><text>请完善预约信息</text></view>
+    <view class="container">
+      <view class="img-box">
+        <image mode="widthFix" src="{{imgUrl+'info-bg.png'}}"></image>
+      </view>
+      <view class="content" wx:if="{{!maskShow}}">
+          <!-- 服务项目 -->
+          <view class="item flex-start">
+            <view class="item-img"><image mode="widthFix" src="/images/server.png"></image></view>
+            <view class="select-box drop-icon">
+              <picker bindchange="bindServeChange" mode="selector" range-key="{{'activeName'}}" value="{{severIndex}}" range="{{serverList}}">
+                <view class="picker" wx:if="{{serverList[severIndex].activeName==undefiend}}">请选择服务</view>
+                <view class="picker" wx:else>{{serverList[severIndex].activeName}}</view>
               </picker>
             </view>
-          <view class="item-btn" bindtap="nextWeek">下一周</view>
-        </view>
+          </view>
+          <!-- 姓名 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src='/images/user.png' mode="widthFix"></image></view>
+            <view class="input-box"><input name="name" value="{{name}}" type='text' placeholder="请输入姓名" bindinput="inputName" /></view>
+          </view>
+          <!-- 电话 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src='/images/phone.png' mode="widthFix"></image></view>
+            <view class="input-box"><input name="phone" value="{{phone}}" type="number" maxlength="11" placeholder="请输入手机号"  bindinput="inputPhone" /></view>
+              <view class="item-bg" bindtap='sendCode' wx:if="{{showCodeBtn}}">验证码</view> 
+            <view class="item-img" wx:else><image></image></view>
+          </view>
+          <!-- 城市 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
+            <view class="select-box drop-icon" >
+              <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+                <view class="picker">
+                  <text wx:if='{{region.length}}'>{{region}}</text>
+                  <text wx:else>请选择城市</text>
+                </view>
+              </picker>
+            </view>
+          </view>
+          <!-- 服务渠道 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src="/images/city.png" mode="widthFix"></image></view>
+            <view class="select-box drop-icon">
+              <picker bindchange="bindChannelChange" mode="selector" range-key="{{'channelName'}}" value="{{channelIndex}}" range="{{channelList}}" >
+              <view class="picker" wx:if='{{!channelList[channelIndex].channelName}}'>选择渠道</view>
+                <view class="picker" wx:else>{{channelList[channelIndex].channelName}}</view>
+              </picker>
+            </view>
+          </view>
+          <!-- 服务门店 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src="/images/store.png" mode="widthFix"></image></view>
+            <view class="select-box drop-icon">
+              <picker bindchange="bindStoreChange" mode="selector" range-key="{{'storeAddress'}}" value="{{storeIndex}}" range="{{storeList}}" >
+              <view class="picker" wx:if='{{!storeList[storeIndex].counterName}}'>选择门店</view>
+                <view class="picker" wx:else>{{storeList[storeIndex].counterName}}</view>
+              </picker>
+            </view>
+          </view>
+          <!-- 服务美容师 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src="/images/beautician.png" mode="widthFix"></image></view>
+            <view class="select-box drop-icon">
+              <picker bindchange="bindStaffChange" mode="selector"  value="{{staffIndex}}" range-key="{{'staffName'}}" range="{{staffList}}">
+                <view class="picker" wx:if="{{!staffList[staffIndex].staffName}}">选择修眉师</view>
+                <view class="picker" wx:else>{{staffList[staffIndex].staffName}}</view>
+              </picker>
+            </view>
+          </view>
+          <!-- 服务日期 -->
+          <view class="item flex-start">
+            <view class="item-img"><image src="/images/time.png" mode="widthFix"></image></view>
+            <view class="select-box drop-icon">
+              <picker mode="date" value="{{date}}" bindchange="bindDateChange" fields="month">
+                <view class="picker" wx:if="{{date == ''}}">选择服务时间</view>
+                <view class="picker" wx:else>{{date}}</view>
+              </picker>
+            </view>
+          </view>
+          <view class="btn-box">
+            <button form-type='submit'>{{bookId?'确认修改':'立即预约'}}</button>
+          </view>
       </view>
-      <view class="week-box flex-cen">
-        <view class="day-item" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
-      </view>
-      <view class="day-box flex-start">
-        <view class="day-item" wx:for="{{dayList}}" wx:key="index" data-item="{{item}}" bindtap="selectDay">
-          <view class="">{{item.day}}</view>
-          <view class="text {{item.available?'active':''}}" >{{item.available?'可约':item.day=='-'?'--':'不可'}}</view>
-        </view>
-      </view>
-      <view class="select-tip" wx:if="{{timeList.length==0}}">请选择日期</view>
-      <view class="time-box" wx:else>
-        <scroll-view
-          scroll-y
-          style="height: 42vh;" >
-        <view class="time-item flexColumnCen {{item.value==1?'active':''}}" wx:for="{{timeList}}" wx:key="index" data-item="{{item}}" data-index="{{index}}" bindtap="selectTime">
-          <view class="item-bg {{currentIndex==index?'current-bg':''}}">
-            <text>{{item.timeFrom + '-' + item.timeTo}}  可预约</text>
+      <view class="mask" wx:else>
+        <view class="select-box">
+          <view class="item flex-start">
+            <view class="item-btn" bindtap="preWeek">上一周</view>
+            <view class="select-box">
+                <picker mode="date" value="{{date}}" bindchange="bindMaskDateChange" fields="month">
+                  <view class="picker">{{date}}</view>
+                </picker>
+              </view>
+            <view class="item-btn" bindtap="nextWeek">下一周</view>
           </view>
         </view>
-        </scroll-view>
-        <view class="comfirn-btn">
-          <button bindtap="submit">确认提交</button>
+        <view class="week-box flex-cen">
+          <view class="day-item" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
+        </view>
+        <view class="day-box flex-start">
+          <view class="day-item" wx:for="{{dayList}}" wx:key="index" data-item="{{item}}" bindtap="selectDay">
+            <view class="">{{item.day}}</view>
+            <view class="text {{item.available?'active':''}}" >{{item.available?'可约':item.day=='-'?'--':'不可'}}</view>
+          </view>
+        </view>
+        <view class="select-tip" wx:if="{{timeList.length==0}}">请选择日期</view>
+        <view class="time-box" wx:else>
+          <scroll-view
+            scroll-y
+            style="height: 42vh;" >
+          <view class="time-item flexColumnCen {{item.value==1?'active':''}}" wx:for="{{timeList}}" wx:key="index" data-item="{{item}}" data-index="{{index}}" bindtap="selectTime">
+            <view class="item-bg {{currentIndex==index?'current-bg':''}}">
+              <text class="border"></text>
+              <text>{{item.timeFrom + '-' + item.timeTo}}  可预约</text>
+            </view>
+          </view>
+          </scroll-view>
+          <view class="comfirn-btn">
+            <button bindtap="submit">确认提交</button>
+          </view>
         </view>
       </view>
     </view>
-    <view class="input-code" wx:if="{{showCode}}">
-    <input name="smsCode" value="{{smsCode}}" type="number" maxlength="4" placeholder="输入验证码"  bindblur="inputCode" />
-      <button bindtap='codeSubmit'>确认</button>
+    <view class="code-mask" wx:if="{{showCode}}">
+      <view class="input-code">
+        <view class="text">请输入验证码</view>
+        <input name="smsCode" value="{{smsCode}}" type="number" maxlength="4" placeholder="验证码"  bindinput="inputCode" />
+        <button bindtap='codeSubmit'>确认</button>
+      </view>
     </view>
   </view>
 </form>

@@ -8,6 +8,7 @@ module.exports = {
   ImgUrl: ImgUrl,//域名地址(完成)
   AuthLoginByWeixin: NewApiRootUrl + 'auth/login_by_weixin', //微信登录(完成)
   SendCode: NewApiRootUrl + "sms/sendCode", //发送验证码(完成)
+  SmsCode: NewApiRootUrl + "system/smsCode/", //发送预约服务验证码(完成)
   CheckCode: NewApiRootUrl + "member/checkCode", //一键注册
   SaveInfo: NewApiRootUrl + "member/save", //保存个人信息
   BookList: NewApiRootUrl + "booking/bookingList",//获取预约服务列表
@@ -23,4 +24,5 @@ module.exports = {
   // member: NewApiRootUrl + "system/token/{memberId}",//获取会员 api token
   SearchBook: NewApiRootUrl + "booking/booking/",//获取会员 api token
   LastBook: NewApiRootUrl + "booking/lastBooking",//获取上次预约的地址
+  SurveyQuestionList: NewApiRootUrl + "system/surveyQuestionList",//问卷调查
 };

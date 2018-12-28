@@ -7,72 +7,87 @@ Page({
    */
   data: {
     imgUrl: api.ImgUrl,
-    judgeService: '',
-    judgeStaff: '',
+    judgeList: [],
     bookId: '',
-    evaluateList:[
-      {
-        problem: '您对本次修眉服务是否满意？', 
-        options: [
-          { name: '满意', value: '1' },
-          { name: '一般', value: '2'},
-          { name: '不满意', value: '3' }
-        ]
-      },
-      {
-        problem: '您对美容师A是否满意？', 
-        options: [
-          { name: '满意', value: '1' },
-          { name: '一般', value: '2' },
-          { name: '不满意', value: '3' }
-        ]
-      }
-    ]
+    evaluateList:[]
   },
   radioChange (e) {
-    console.log(e)
-    let i = e.currentTarget.dataset.index,
-        val = e.detail.value;
-    if(i == 0){
-      this.setData({
-        judgeService: val
-      })
-    }else{
-      this.setData({
-        judgeStaff: val
-      })
+    let params = {
+          questionId: e.currentTarget.dataset.id.toString(),
+          questionAnswer: e.detail.value
+        },
+        judgeList = this.data.judgeList
+    console.log(params)
+    if (judgeList && judgeList.length>0){
+      judgeList.forEach(item=>{
+        console.log(item.questionId, params.questionId)
+        if (item.questionId == params.questionId){
+          item.questionAnswer = params.questionAnswer
+        }
+      })    
     }
+    console.log('judgeList111', this.data.judgeList )
   },
   goIndex() {
     wx.switchTab({
       url: '/pages/index/index',
     })
   },
-  submit () {
-    let params = {
-      bookId: this.data.bookId,
-      judgeService: this.data.judgeService.toString(),
-      judgeStaff: this.data.judgeStaff.toString()
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.ServiceJudge, params, 'post').then(res => {
-      wx.hideLoading()
-      if (res.ret_code == 0) {
-        wx.showModal({
-          content: '服务评价成功！',
-          showCancel: false,
-          confirmColor: '#fe697f',
-          success(res) {
-            if (res.confirm) {
-              wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
-            }
-          }
+  getQuestionList () {
+    let list = [], judgeList =[]
+    util.request(api.SurveyQuestionList,{},'get').then(res=>{
+      console.log(res)
+      if(res.ret_code == 0) {
+        res.data.list.forEach(item=>{
+          list.push({
+            id: item.id,
+            questionDesc: item.questionDesc,
+            questionOption: JSON.parse(item.questionOption),
+          })
+          judgeList.push({
+            questionId: item.id.toString(),
+            questionAnswer: ''
+          })
         })
+        this.setData({
+          evaluateList: list,
+          judgeList: judgeList
+        })
+        console.log(list)
       }
-    }).catch(err => { 
-      console.log(err)
-      wx.hideLoading()
     })
+  },
+  submit () {
+    let params = this.data.judgeList,
+      isCheck = params.every(item=> item.questionAnswer != '')
+      params = JSON.stringify(params)
+      console.log(params)
+    if (isCheck){
+      wx.showLoading({ title: '加载中', mask: true })
+      util.request(api.ServiceJudge, params , 'post').then(res => {
+        wx.hideLoading()
+        if (res.ret_code == 0) {
+          wx.showModal({
+            content: '服务评价成功！',
+            showCancel: false,
+            confirmColor: '#fe697f',
+            success(res) {
+              if (res.confirm) {
+                wx.switchTab({ url: '/pages/myOrdered/myOrdered' })
+              }
+            }
+          })
+        }
+      }).catch(err => { 
+        console.log(err)
+        wx.hideLoading()
+      })
+    }else{
+      wx.showToast({
+        title: '还有问卷尚未全部答完！',
+        icon: 'none'
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -82,6 +97,7 @@ Page({
     this.setData({
       bookId: options.bookId
     })
+    this.getQuestionList()
   },
 
   /**

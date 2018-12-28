@@ -2,7 +2,7 @@
 <template is="headerTpl"></template>
 <view class="warpper">
   <view class="img-box">
-    <image mode="widthFix" src="{{imgUrl}}"></image>
+    <image mode="widthFix" lazy-load="{{true}}" src="{{imgUrl}}"></image>
   </view>
   <view class="content">
     <view class="details-box">

@@ -30,6 +30,7 @@
   border-radius: 6rpx;
   margin-right: 15rpx;
   margin-bottom: 80rpx;
+  background: #ffffff;
   border:8rpx solid #333333;
   box-shadow:10rpx 10rpx 10rpx #eea0ae;
 }

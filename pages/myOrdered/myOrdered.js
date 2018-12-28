@@ -9,7 +9,7 @@ Page({
   data: {
     imgUrl: api.ImgUrl,
     statusBtn:[{text: '待完成',status: 0},{text: '已完成',status: 1}],
-    current: 1,
+    current: 0,
     list: []
   },
   goIndex() {
@@ -65,7 +65,7 @@ Page({
    */
   onLoad: function (options) {
     let params = {
-      bookingStatus: 1
+      bookingStatus: 0
     }
     this.bookingList(params)
   },

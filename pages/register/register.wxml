@@ -12,14 +12,16 @@
         <view class="item flex-start">
           <view class="item-img"><image src='/images/register-phone.png' mode="widthFix"></image></view>
           <view class="input-box">
-            <input type="number"  name='mobile' value='{{mobile}}' maxlength="11" placeholder="输入手机号" bindblur="inputPhone" placeholder-class="place-holder" bindblur="inputPhone"/>
+            <input type="number"  name='mobile' value='{{mobile}}' maxlength="11" placeholder="输入手机号" placeholder-class="place-holder" bindinput="inputPhone"/>
           </view>
           <view class="item-btn" bindtap='sendCode'>验证码</view>
         </view>
         <!-- 验证码 -->
         <view class="item flex-start">
           <view class="item-img"><image src='/images/code.png' mode="widthFix"></image></view>
-          <view class="input-box"><input maxlength="4" name='code' value='{{code}}' type="number" placeholder="请在此输入4位验证码" placeholder-class="place-holder" bindblur="inputCode"/></view>
+          <view class="input-box">
+            <input maxlength="4" name='code' value='{{code}}' type="number" placeholder="请在此输入4位验证码" placeholder-class="place-holder" bindinput="inputCode"/>
+          </view>
         </view>
         <view >
           <image mode="widthFix" src="{{imgUrl+'ad1.png'}}"></image>

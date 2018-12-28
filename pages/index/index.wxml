@@ -1,6 +1,7 @@
 <view wx:if="{{show}}">
-  <import src="/template/header-tpl.wxml" />
-  <template is="headerTpl"></template>
+  <view class="header-box">
+    <image mode="widthFix" src="https://booking.benefitbrows.cn/benefit_xcx/statics/images/head-img.png"></image>
+  </view>
   <view class="warpper">
     <view class="swiper-up">
       <swiper class="swiper" vertical="{{true}}" bindchange="bindSwiperChange">
@@ -29,7 +30,7 @@
         <view class="select-box">
           <!-- <picker bindchange="bindServeChange" mode="selector" range-key="{{'serviceName'}}" value="{{severIndex}}" range="{{serverList}}"> -->
             <!-- <view class="picker">{{serverList[severIndex].serviceName}}</view> -->
-            <view class="picker">滑动选择服务</view>
+            <view class="picker">滑动图片选择服务</view>
           <!-- </picker> -->
         </view>
       </view>

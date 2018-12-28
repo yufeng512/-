@@ -1,7 +1,12 @@
 /* pages/orederInfo/orederInfo.wxss */
 .warpper{
+  width: 100vw;
+  height: 100vh;
+}
+.container{
   position: relative;
   width: 100vw;
+  height: 100vh;
 }
 .warpper .img-box{
   position: absolute;
@@ -10,18 +15,47 @@
   z-index: 1;
   width: 100vw;
 }
-.warpper .input-code{
+.code-mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 6;
+}
+.code-mask .input-code{
   position: absolute;
   left: 20%;
-  top: 20vh;
+  top: 25vh;
   width: 60vw;
-  z-index: 5;
+  z-index: 7;
   padding: 30rpx 10rpx;
   border-radius: 10rpx;
   background: #ffffff;
+  border: 10rpx solid #333333; 
+  box-shadow: -3px -3px 6px #eea0ae inset;
 }
-.warpper .input-code input{
-  margin-bottom: 30rpx;
+.code-mask .input-code input{
+  margin:40rpx 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 26rpx;
+  word-spacing: 20rpx;
+  letter-spacing: 20rpx;
+  border-bottom: 1px solid #dbdbdb;
+}
+.code-mask .input-code .text{
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bolder;
+  color: #000000;
+}
+.code-mask .input-code button{
+  width: 40vw;
+  height: 72rpx;
+  line-height: 72rpx;
 }
 .warpper .content{
   position: absolute;
@@ -81,15 +115,16 @@
 .item .select-box{
   flex: 1 0 auto;
   font-size: 24rpx;
-  text-align: center;
+  text-align: left;
   color: #666666;
+  margin-right: 2vw;
 }
 .mask .item .select-box picker{
   height: 82rpx;
   line-height: 82rpx;
 }
 .content .item .select-box picker{
-  width: 56vw;
+  width: 60vw;
   height: 82rpx;
   line-height: 82rpx;
 }
@@ -100,6 +135,7 @@
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
+  text-indent: 20rpx;
 }
 .item .item-img image{
   width: 36rpx;
@@ -109,8 +145,9 @@
 }
 .item .input-box input{
   font-size: 28rpx;
-  margin-left: 20rpx;
-  text-align: center;
+  text-align: left;
+  color: #666666;
+  padding-left: 20rpx; 
 }
 .check-box text{
   font-size: 28rpx;
@@ -126,6 +163,10 @@
 .comfirn-btn button,
 .btn-box button{
   width: 60vw;
+}
+.code-mask .input-code button,
+.comfirn-btn button,
+.btn-box button{
   color: #333333;
   font-weight: bolder;
   background-repeat: no-repeat;
@@ -143,6 +184,18 @@
   height: 60rpx;
   line-height: 60rpx;
   border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.time-box .time-item .item-bg .border{
+  display: block;
+  width: 30rpx;
+  height: 30rpx;
+  border: 6rpx solid #ff697f;
+  border-radius: 50%;
+  background: #ffced0;
+  margin-right: 60rpx;
 }
 .time-box .time-item text{
   font-size: 28rpx;
