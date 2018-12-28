@@ -62,9 +62,7 @@ Page({
                   borderRadius: 2,
                   padding: 5,
                   display: 'ALWAYS',
-                },
-                width: 50,
-                height: 50
+                }
               }]
             })
           }
