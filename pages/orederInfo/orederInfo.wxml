@@ -1,4 +1,4 @@
-<form bindsubmit="formSubmit">
+<form bindsubmit="formSubmit" report-submit='true'>
   <view class="warpper">
     <import src="/template/header-tpl.wxml" />
     <template is="headerTpl"></template>
@@ -33,14 +33,7 @@
           <!-- 城市 -->
           <view class="item flex-start">
             <view class="item-img"><image src="/images/address.png" mode="widthFix"></image></view>
-            <view class="select-box drop-icon" >
-              <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
-                <view class="picker">
-                  <text wx:if='{{region.length}}'>{{region}}</text>
-                  <text wx:else>请选择城市</text>
-                </view>
-              </picker>
-            </view>
+            <view class="city drop-icon" bindtap="updateLocationInfo" data-title="state">{{region}}</view>
           </view>
           <!-- 服务渠道 -->
           <view class="item flex-start">
@@ -130,6 +123,34 @@
         <view class="text">请输入验证码</view>
         <input name="smsCode" value="{{smsCode}}" type="number" maxlength="4" placeholder="验证码"  bindinput="inputCode" />
         <button bindtap='codeSubmit'>确认</button>
+      </view>
+    </view>
+    <view class="location-select" wx:if="{{pickerInfo.state == true}}">
+      <view class="location-picker">
+        <view class="location-picker-top flex-center-center">
+          {{pickerInfo.title}}
+        </view>
+        <picker-view class="location-picker-view" value="{{pickerInfo.value}}" indicator-style="height: 50px;" bindchange="updatePicker">
+          <picker-view-column>
+            <view wx:for="{{pickerInfo.provinces}}" wx:key="index" class="picker-province-item">
+              {{item.provinceName}}
+            </view>
+          </picker-view-column>
+          <picker-view-column>
+            <view wx:for="{{pickerInfo.citys}}"  wx:key="index" class="picker-city-item">
+              {{item.cityName}}
+            </view>
+          </picker-view-column>
+        </picker-view>
+        <!--取消和确定-->
+        <view class="location-picker-bottom">
+          <view class="picker-bottom-left" bindtap="updateLocationInfo" data-title="cancel">
+            {{pickerInfo.submits[0]}}
+          </view>
+          <view class="picker-bottom-right" bindtap="updateLocationInfo" data-title="select">
+            {{pickerInfo.submits[1]}}
+          </view>
+        </view>
       </view>
     </view>
   </view>

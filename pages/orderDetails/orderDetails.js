@@ -175,7 +175,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '眉吧服务预约',
+      title: '现在就去型眉定制！',
       path: 'pages/index/index',
       imageUrl: '/static/images/share.jpg'
     }

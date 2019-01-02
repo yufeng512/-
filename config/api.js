@@ -24,5 +24,6 @@ module.exports = {
   // member: NewApiRootUrl + "system/token/{memberId}",//获取会员 api token
   SearchBook: NewApiRootUrl + "booking/booking/",//获取会员 api token
   LastBook: NewApiRootUrl + "booking/lastBooking",//获取上次预约的地址
+  CurrentCity: NewApiRootUrl + "system/currentCity",//获取用户当前地址
   SurveyQuestionList: NewApiRootUrl + "system/surveyQuestionList",//问卷调查
 };

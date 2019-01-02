@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgList: [api.ImgUrl + '128.png', api.ImgUrl + '168.png', api.ImgUrl+'208.png'],
+    imgList: [api.ImgUrl + '128.png?12423', api.ImgUrl + '168.png?24123', api.ImgUrl +'208.png?12243'],
     borderImg: api.ImgUrl+'border.png',
     imgUrl: api.ImgUrl,
     serverList: [],
@@ -16,6 +16,10 @@ Page({
     show: false
   },
   goOrderInfo () {
+    wx.showLoading({
+      title: '跳转中',
+      mask: true,
+    })
     let serviceCode = this.data.serverList[this.data.severIndex].serviceCode,
         severIndex = this.data.severIndex,
         self = this;
@@ -30,6 +34,7 @@ Page({
         self.setData({
           borderImg: api.ImgUrl + 'border.png',
         })
+        wx.hideLoading()
       }, 2000) 
     }else{
       wx.showToast({
@@ -37,6 +42,8 @@ Page({
         icon: 'none',
         duration: 2000
       })
+      wx.hideLoading()
+
     }
   },
   getData () {
@@ -127,7 +134,7 @@ Page({
    */
   onShareAppMessage() {
     return {
-      title: '眉吧服务预约',
+      title: '现在就去型眉定制！',
       path: 'pages/index/index',
       imageUrl: '/static/images/share.jpg'
     }

@@ -1,0 +1,50 @@
+<form bindsubmit="formSubmit" report-submit='true'>
+  <view class="warpper">
+    <import src="/template/header-tpl.wxml" />
+    <template is="headerTpl"></template>
+    <view class="tip"><text>请完善预约信息</text></view>
+    <view class="container">
+      <view class="img-box">
+        <image mode="widthFix" src="{{imgUrl+'info-bg.png'}}"></image>
+      </view>
+      <view class="mask">
+        <view class="select-box">
+          <view class="item flex-start">
+            <view class="item-btn" bindtap="preWeek">上一周</view>
+            <view class="select-box">
+                <picker mode="date" value="{{date}}" bindchange="bindMaskDateChange" fields="month">
+                  <view class="picker">{{date}}</view>
+                </picker>
+              </view>
+            <view class="item-btn" bindtap="nextWeek">下一周</view>
+          </view>
+        </view>
+        <view class="week-box flex-cen">
+          <view class="day-item" wx:for="{{weekList}}" wx:key="index">{{item}}</view>
+        </view>
+        <view class="day-box flex-start">
+          <view class="day-item" wx:for="{{dayList}}" wx:key="index" data-item="{{item}}" bindtap="selectDay">
+            <view class="">{{item.day}}</view>
+            <view class="text {{item.available?'active':''}}" >{{item.available?'可约':item.day=='-'?'--':'不可'}}</view>
+          </view>
+        </view>
+        <view class="select-tip" wx:if="{{timeList.length==0}}">请选择日期</view>
+        <view class="time-box" wx:else>
+          <scroll-view
+            scroll-y
+            style="height: 42vh;" >
+          <view class="time-item flexColumnCen {{item.value==1?'active':''}}" wx:for="{{timeList}}" wx:key="index" data-item="{{item}}" data-index="{{index}}" bindtap="selectTime" wx:if="{{item.available}}">
+            <view class="item-bg {{currentIndex==index?'current-bg':''}}">
+              <text class="border"></text>
+              <text class="text">{{item.timeFrom + '-' + item.timeTo}}  可预约</text>
+            </view>
+          </view>
+          </scroll-view>
+          <view class="comfirn-btn">
+            <button bindtap="submit">确认提交</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</form>

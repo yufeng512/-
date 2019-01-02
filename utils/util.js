@@ -40,14 +40,14 @@ function getRoute(page) {
 /**
  * 封封微信的的request
  */
-function request(url, data = {}, method = "GET", callback) {
+function request(url, data = {}, method = "GET",header , callback) {
   return new Promise(function (resolve, reject) {
     wx.request({
       url: url,
       data: data,
       method: method,
       header: {
-        'Content-Type': 'application/json',
+        'Content-Type': header ? header:'application/json',
         'X-Nideshop-Token': wx.getStorageSync('token'),
         'LOGIN_USER_KEY': wx.getStorageSync('userId')
       },

@@ -24,7 +24,8 @@
             <text wx:if="{{item.bookingTime}}">预约时间:{{item.bookingTime}}</text>
           </view>
           <view class="btn-box">
-            <button data-id="{{item.bookId}}" catchtap="goEvaluate">{{current==1?'评价':'修改'}}</button>
+          <button data-id="{{item.bookId}}" catchtap="goEvaluate" wx:if="{{item.judgeTime}}" disabled='{{true}}'>已评价</button>
+            <button data-id="{{item.bookId}}" catchtap="goEvaluate" wx:else>{{current==1?'评价':'修改'}}</button>
           </view>
         </view>
       </scroll-view>

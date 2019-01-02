@@ -1,3 +1,6 @@
+.regImg{
+  width: 100vw;
+}
 .warpper{
   position: relative;
   width: 100vw;

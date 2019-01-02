@@ -1,5 +1,7 @@
 const util = require('../../utils/util.js')
 const api = require('../../config/api.js')
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+var qqmapsdk;
 Page({
 
   /**
@@ -15,15 +17,9 @@ Page({
     storeIndex: null,
     staffList: [],
     staffIndex: null,
-    timeList: [], //预约时间列表
-    weekList: ['一', '二', '三', '四', '五', '六', '日'],
-    dayList: [], //预约日期列表
-    initDaylist:[], //选中月份多少天
-    currentIndex: null, //当前选中的时间
-    currentDay: null, //当前选中的天
     name: '',
     phone: '',
-    region: '',
+    region: '选择城市',
     date: '',
     day: '',
     timeFrom:'',
@@ -35,6 +31,160 @@ Page({
     bookId: '',
     latitude: 0,
     longitude: 0,
+    // 城市选择弹框
+    pickerInfo: {
+      'state': false,
+      'title': '选择城市',
+      'value': [0, 0],
+      'submits': ['取消', '确定'],
+    },
+
+    // 省列表
+    provinceList: [
+      {
+        provinceName: '北京市',
+        cityList: [{ cityID: 1, cityName: '北京市' }]
+      },
+      {
+        provinceName: '天津市',
+        cityList: [{ cityID: 1, cityName: '天津市' }]
+      },
+      {
+        provinceName: '上海市',
+        cityList: [{ cityID: 1, cityName: '上海市' }]
+      },
+      {
+        provinceName: '重庆市',
+        cityList: [{ cityID: 1, cityName: '重庆市' }]
+      },
+      {
+        provinceName: '江苏',
+        cityList: [{ cityID: 1, cityName: '苏州市' }, { cityID: 1, cityName: '无锡市' }, { cityID: 1, cityName: '泰州市' }, { cityID: 1, cityName: '常州市' }, { cityID: 1, cityName: '南京市' }, { cityID: 1, cityName: '南通市' }]
+      },
+      {
+        provinceName: '安徽',
+        cityList: [{ cityID: 1, cityName: '合肥市' }, { cityID: 1, cityName: '芜湖市' }]
+      },
+      {
+        provinceName: '湖南',
+        cityList: [{ cityID: 1, cityName: '长沙市' }, { cityID: 1, cityName: '株洲市' }]
+      },
+      {
+        provinceName: '湖北',
+        cityList: [{ cityID: 1, cityName: '武汉市' }]
+      },
+      {
+        provinceName: '山西',
+        cityList: [{ cityID: 1, cityName: '太原市' }]
+      },
+      {
+        provinceName: '山东',
+        cityList: [{ cityID: 1, cityName: '济南市' }, { cityID: 1, cityName: '青岛市' }, { cityID: 1, cityName: '潍坊市' }, { cityID: 1, cityName: '淄博市' }]
+      },
+      {
+        provinceName: '广西',
+        cityList: [{ cityID: 1, cityName: '南宁市' }]
+      },
+      {
+        provinceName: '广东',
+        cityList: [{ cityID: 1, cityName: '广州市' }, { cityID: 1, cityName: '东莞市' }, { cityID: 1, cityName: '深圳市' }, { cityID: 1, cityName: '佛山市' }, { cityID: 1, cityName: '珠海市' }]
+      },
+      {
+        provinceName: '河北',
+        cityList: [{ cityID: 1, cityName: '石家庄市' }, { cityID: 1, cityName: '保定市' }, { cityID: 1, cityName: '廊坊市' }, { cityID: 1, cityName: '唐山市' }, { cityID: 1, cityName: '珠海市' }]
+      },
+      {
+        provinceName: '河南',
+        cityList: [{ cityID: 1, cityName: '郑州市' }]
+      },
+      {
+        provinceName: '宁夏',
+        cityList: [{ cityID: 1, cityName: '银川市' }]
+      },
+      {
+        provinceName: '新疆',
+        cityList: [{ cityID: 1, cityName: '乌鲁木齐市' }]
+      },
+      {
+        provinceName: '青海',
+        cityList: [{ cityID: 1, cityName: '西宁市' }]
+      },
+      {
+        provinceName: '辽宁',
+        cityList: [{ cityID: 1, cityName: '大连市' }, { cityID: 1, cityName: '沈阳市' }]
+      },
+      {
+        provinceName: '内蒙古',
+        cityList: [{ cityID: 1, cityName: '呼和浩特' }]
+      },
+      {
+        provinceName: '甘肃',
+        cityList: [{ cityID: 1, cityName: '兰州市' }]
+      },
+      {
+        provinceName: '浙江',
+        cityList: [{ cityID: 1, cityName: '宁波市' }]
+      },
+      {
+        provinceName: '陕西',
+        cityList: [{ cityID: 1, cityName: '西安市' }]
+      },
+      {
+        provinceName: '四川',
+        cityList: [{ cityID: 1, cityName: '成都市' }, { cityID: 1, cityName: '泸州市' }, { cityID: 1, cityName: '绵阳市' }]
+      },
+      {
+        provinceName: '黑龙江',
+        cityList: [{ cityID: 1, cityName: '大庆市' }, { cityID: 1, cityName: '哈尔滨市' }]
+      },
+      {
+        provinceName: '江西',
+        cityList: [{ cityID: 1, cityName: '南昌市' }]
+      },
+      {
+        provinceName: '云南',
+        cityList: [{ cityID: 1, cityName: '昆明市' }]
+      },
+      {
+        provinceName: '福建',
+        cityList: [{ cityID: 1, cityName: '福州市' }, { cityID: 1, cityName: '泉州市' }]
+      },
+      {
+        provinceName: '贵州',
+        cityList: [{ cityID: 1, cityName: '贵阳市' }]
+      }
+    ],
+    //市列表
+    cityList: [
+      [{ cityID: 1, cityName: '北京市' }],
+      [{ cityID: 1, cityName: '天津市' }],
+      [{ cityID: 1, cityName: '上海市' }],
+      [{ cityID: 1, cityName: '重庆市' }],
+      [{ cityID: 1, cityName: '苏州市' }, { cityID: 1, cityName: '无锡市' }, { cityID: 1, cityName: '泰州市' }, { cityID: 1, cityName: '常州市' }, { cityID: 1, cityName: '南京市' }, { cityID: 1, cityName: '南通市' }],
+      [{ cityID: 1, cityName: '合肥市' }, { cityID: 1, cityName: '芜湖市' }],
+      [{ cityID: 1, cityName: '长沙市' }, { cityID: 1, cityName: '株洲市' }],
+      [{ cityID: 1, cityName: '武汉市' }],
+      [{ cityID: 1, cityName: '太原市' }],
+      [{ cityID: 1, cityName: '济南市' }, { cityID: 1, cityName: '青岛市' }, { cityID: 1, cityName: '潍坊市' }, { cityID: 1, cityName: '淄博市' }],
+      [{ cityID: 1, cityName: '南宁市' }],
+      [{ cityID: 1, cityName: '广州市' }, { cityID: 1, cityName: '东莞市' }, { cityID: 1, cityName: '深圳市' }, { cityID: 1, cityName: '佛山市' }, { cityID: 1, cityName: '珠海市' }],
+      [{ cityID: 1, cityName: '石家庄市' }, { cityID: 1, cityName: '保定市' }, { cityID: 1, cityName: '廊坊市' }, { cityID: 1, cityName: '唐山市' }, { cityID: 1, cityName: '珠海市' }],
+      [{ cityID: 1, cityName: '郑州市' }],
+      [{ cityID: 1, cityName: '银川市' }],
+      [{ cityID: 1, cityName: '乌鲁木齐市' }],
+      [{ cityID: 1, cityName: '西宁市' }],
+      [{ cityID: 1, cityName: '大连市' }, { cityID: 1, cityName: '沈阳市' }],
+      [{ cityID: 1, cityName: '呼和浩特' }],
+      [{ cityID: 1, cityName: '兰州市' }],
+      [{ cityID: 1, cityName: '宁波市' }],
+      [{ cityID: 1, cityName: '西安市' }],
+      [{ cityID: 1, cityName: '成都市' }, { cityID: 1, cityName: '泸州市' }, { cityID: 1, cityName: '绵阳市' }],
+      [{ cityID: 1, cityName: '大庆市' }, { cityID: 1, cityName: '哈尔滨市' }],
+      [{ cityID: 1, cityName: '南昌市' }],
+      [{ cityID: 1, cityName: '昆明市' }],
+      [{ cityID: 1, cityName: '福州市' }, { cityID: 1, cityName: '泉州市' }],
+      [{ cityID: 1, cityName: '贵阳市' }]
+    ]
   },
   goIndex(){
     wx.switchTab({
@@ -64,29 +214,18 @@ Page({
   getChannelList(channelCode) {
     util.request(api.ChannelList, {}, 'get').then(res=>{
       if(res.ret_code==0){
-        if (channelCode){
-          res.data.list.forEach((item,i)=>{
-            if (item.channelCode == channelCode){
-              this.setData({
-                channelIndex: i,
-                channelList: res.data.list
-              })
-            }
-          })
-        }else{
-          this.setData({
-            channelList: res.data.list
-          })
-        }
+        this.setData({
+          channelList: res.data.list
+        })
       }
     })
   },
-  getStoreList(counterCode, serviceCode,channelCode) {
+  getStoreList() {
     let index = this.data.severIndex,list = [];
     let params = {
-      serviceCode: serviceCode ? serviceCode : this.data.serverList[index].serviceCode,
+      serviceCode: this.data.serverList[index].serviceCode,
       city: this.data.region,
-      counterChannel: channelCode ? channelCode : this.data.channelList[this.data.channelIndex].channelCode,
+      counterChannel: this.data.channelList[this.data.channelIndex].channelCode,
       longitude: this.data.longitude,
       latitude: this.data.latitude
     }
@@ -97,23 +236,14 @@ Page({
       if (res.ret_code == 0) {
         res.data.list.forEach(item=>{
           list.push({
-            storeAddress: item.counterName + ' ' + item.distance +'KM',
+            storeAddress: item.counterName + ' 距离您' + item.distance +'KM',
             counterName: item.counterName,
             counterCode: item.counterCode
           })
         })
-        if(counterCode) {
-          res.data.list.forEach((item, i) => {
-            if (item.counterCode == counterCode) {
-              this.setData({
-                storeIndex: i,
-                storeList: list
-              })
-            }
-          })
-        }else{
-          this.setData({ storeList: list })
-        }
+        this.setData({
+          storeList: list
+        })
       }
     }).catch(err => { 
       console.log(err) 
@@ -122,26 +252,17 @@ Page({
   },
   getStaffList(staffCode, serviceCode, counterCode) {
     let params = {
-      serviceCode: serviceCode ? serviceCode:this.data.serverList[this.data.severIndex].serviceCode,
-      counterCode: counterCode ? counterCode:this.data.storeList[this.data.storeIndex].counterCode
+      serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
+      counterCode: this.data.storeList[this.data.storeIndex].counterCode
     }
     wx.showLoading({ title: '加载中', mask: true })
     util.request(api.StaffList, params, 'get').then(res => {
       console.log(res)
       wx.hideLoading()
       if (res.ret_code == 0) {
-        if (staffCode) {
-          res.data.list.forEach((item, i) => {
-            if (item.staffCode == staffCode) {
-              this.setData({
-                staffIndex: i,
-                staffList: res.data.list
-              })
-            }
-          })
-        } else {
-          this.setData({ staffList: res.data.list })
-        }
+        this.setData({
+          staffList: res.data.list
+        })
       }
     }).catch(err=>{
       console.log(err)
@@ -167,9 +288,6 @@ Page({
           timeTo: res.data.timeTo
         })
         this.getServiceList(serviceCode)
-        this.getChannelList(channelCode)
-        this.getStoreList(counterCode, serviceCode, channelCode) 
-        this.getStaffList(staffCode, serviceCode, counterCode) 
       }
     }).catch(err => {
       console.log(err)
@@ -177,11 +295,15 @@ Page({
     })
   },
   getLastAddress () {
-    util.request(api.LastBook, {}, 'get').then(res=>{
+    let params = {
+      latitude: this.data.latitude,
+      longitude: this.data.longitude
+    }
+    util.request(api.CurrentCity, params, 'get').then(res=>{
       console.log(res)
       if (res.ret_code == 0) {
         this.setData({
-          region: res.data.city
+          region: res.data.list.cityName
         })
       }
     })
@@ -191,6 +313,9 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
+    qqmapsdk = new QQMapWX({
+      key: '24EBZ-MMPLU-7PBVE-4J3D7-CKQQ2-TOFTJ' //自己的key秘钥 http://lbs.qq.com/console/mykey.html 在这个网址申请
+    });
     if (options.serviceCode) {
       this.getServiceList(options.serviceCode)
     }
@@ -201,7 +326,6 @@ Page({
       this.getBookList(options)
     }
     this.getLocation()
-    this.getLastAddress()
     this.getChannelList()
   },
   getLocation() {
@@ -216,31 +340,45 @@ Page({
           latitude: latitude,
           longitude: longitude
         })
+        self.getLastAddress()
+        // self.getLocal(latitude, longitude)
       }
     })
+  },
+  // 获取当前地理位置
+  getLocal (latitude, longitude) {
+    let vm = this;
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      success: function (res) {
+        console.log('-------------------', JSON.stringify(res));
+        let province = res.result.ad_info.province
+        let city = res.result.ad_info.city
+        vm.setData({
+          region: city
+        })
+
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        // console.log(res);
+      }
+    });
   },
   bindServeChange (e) {
     if (this.data.severIndex != e.detail.value){
       this.setData({
         severIndex: e.detail.value,
-        region: '',
+        region: '选择城市',
         storeList: [],
         staffList: [],
         storeIndex: null,
         channelIndex: null,
-        staffIndex: null,
-        date: ''
-      })
-    }
-  },
-  bindRegionChange (e) {
-    if (this.data.region != e.detail.value[1]){
-      this.setData({
-        region: e.detail.value[1],
-        storeList: [],
-        staffList: [],
-        channelIndex: null,
-        storeIndex: null,
         staffIndex: null,
         date: ''
       })
@@ -376,196 +514,28 @@ Page({
       })
       return false
     }
-    this.selectDate(e, 1)
-  },
-  bindMaskDateChange(e) {
-    this.selectDate(e, 0)
-  },
-  //选择日期
-  selectDate(e, i) {
-    let now = new Date(), dayList=[]
-    let val = e.detail.value.split('-')
-    if (Number(val[0]) == now.getFullYear()) {
-      if (Number(val[1]) > (now.getMonth() + 1)) {
-        this.setData({date: e.detail.value})
-        dayList = this.getDates(1, e).slice(0, 7)
-      } else if (Number(val[1]) == (now.getMonth() + 1)) {
-        this.setData({date: e.detail.value})
-        dayList = this.getDates(0, e).slice(0, 7)
-      } else {
-        wx.showToast({
-          title: '请选择当前往后的时间！',
-          icon: 'none',
-          duration: 2000
-        })
-        return false
-      }
-    } else if (Number(val[0]) > now.getFullYear()) {
-      this.setData({date: e.detail.value})
-      dayList = this.getDates(1, e).slice(0, 7)
-    } else{
-      wx.showToast({
-        title: '请选择当前往后的时间！',
-        icon: 'none',
-        duration: 2000
-      })
-      return false
-    }
-    this.getStaffListTime(dayList)
-    if(i==1){
-      this.setData({
-        maskShow: true
-      })
-    }
-  },
-  //选择日
-  selectDay(e) {
-    let item = e.currentTarget.dataset.item
-    if(!item.available){
-      wx.showToast({title:'今日不可约！',icon: 'none'})
-      return false
-    }
-    let val = this.data.date.split('-')
-    let params = {
-      day: val[0] + val[1] + item.day,
-      counterCode: this.data.storeList[this.data.storeIndex].counterCode,
-      serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
-      staffCode: this.data.staffList[this.data.staffIndex].staffCode
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.OrderStaffList, params,'get').then(res=>{
-      wx.hideLoading()
-      let list = []
-      if (res.ret_code == 0){
-        res.data.list.forEach(item=>{
-          list.push({
-            timeFrom: item.timeFrom,
-            timeTo: item.timeTo
-          })
-        })
-        this.setData({
-          day: val[0] + val[1] + item.day,
-          date: val[0] + '-' + val[1] + '-' + item.day,
-          timeList: list
-        })
-      }else{
-        wx.showToast({title: res.err_msg,icon: 'none'})
-      }
-    }).catch(err => { 
-      console.log(err)
-      wx.hideLoading()
-    })
-  },
-  //选择时间
-  selectTime(e) {
-    let index = e.currentTarget.dataset.index,
-        item = e.currentTarget.dataset.item
+    let index = this.data.staffIndex == 0 ? 1 : this.data.staffIndex,
+    counterCode =  this.data.storeList[this.data.storeIndex].counterCode,
+    serviceCode = this.data.serverList[this.data.severIndex].serviceCode,
+    staffCode = this.data.staffList[index].staffCode
+    console.log(e)
     this.setData({
-      currentIndex: index,
-      timeFrom: item.timeFrom,
-      timeTo: item.timeTo
+      date: e.detail.value
     })
-  },
-  preWeek() {//上一周
-    let list = this.data.initDaylist,
-        firstDay = this.data.dayList[0].day,
-        now = new Date().getDate(),
-        currentList = [],
-        n;
-    if (firstDay == list[0].day) {
-      wx.showToast({ title: '当前是第一周!', icon: 'none' })
-      return false
-    }
-    list.forEach((item, i) => {
-      if (item.day == firstDay) { n = i }
-    })
-    currentList = list.slice(n-7,n)
-    this.getStaffListTime(currentList)
-  },
-  nextWeek() {//下一周
-    if (this.data.dayList[0].day >= 25) {
-      wx.showToast({ title: '当前是最后一周!', icon: 'none' })
-      return false
-    }
-    let list = this.data.initDaylist,
-        lastDay = this.data.dayList[6].day,
-        currentList = [],
-        n;
-    list.forEach((item,i)=>{
-      if (item.day == lastDay){ n = i}
-    })
-    currentList = list.slice(n + 1, n + 8)
-    console.log(currentList)
-    for (var i = currentList.length; i < 7; i++) {
-      currentList.push({ day: '-', available: false})
-    }
-    this.getStaffListTime(currentList)
-  },
-  getDates(val,e) {//获取当月天数列表
-    let selectDate = e.detail.value.split('-'),
-        curDate = new Date(),
-        curDay = curDate.getDate(),
-        n = new Date(selectDate[0], selectDate[1], 0).getDate(),
-        curMonth = curDate.getMonth(),
-        dayList = [];
-    console.log(n, curDay)
-    if (val==0){
-      for (var i = curDay; i <= n; i++) {
-        if(i<10){i = '0'+i}
-        dayList.push({ day: i, available: false})
-      }
-      if (dayList.length<7){
-        for (var j = 0; j <= (7 - dayList.length); i++) {
-          dayList.push({ day: '-', available: false })
-        }
-      }
-    }else{
-      for (var i = 1; i <= n; i++) {
-        if (i < 10) {i = '0' + i}
-        dayList.push({ day: i, available: false })
-      }
-    }
-    this.setData({initDaylist: dayList})
-    return dayList
-  },
-  getStaffListTime (daylist) {
-    let val = this.data.date.split('-'),
-        list = daylist.filter(item => item.day != '-')
-    let params = {
-      startDay: val[0] + val[1] + list[0].day,
-      endDay: val[0] + val[1] + list[list.length-1].day,
-      counterCode: this.data.storeList[this.data.storeIndex].counterCode,
-      serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
-      staffCode: this.data.staffList[this.data.staffIndex].staffCode
-    }
-    wx.showLoading({ title: '加载中', mask: true })
-    util.request(api.IsServiceTImeList, params,'get').then(res=>{
-      if (res.ret_code == 0){
-        daylist.forEach(item=>{
-          res.data.list.forEach(_item=>{
-            if (item.day == Number(_item.day.substring(6, 8))){
-              item.available = true
-            }
-          })
-        })
-        this.setData({
-          dayList: daylist,
-          timeList: []
-        })
-      } else {
-        wx.showToast({ title: res.err_msg, icon: 'none' })
-      }
-      wx.hideLoading()
-    }).catch(err => { 
-      wx.hideLoading()
-      console.log(err) 
+    wx.navigateTo({
+      url: '/pages/selectDate/selectDate?date=' + e.detail.value + '&counterCode=' + counterCode + '&serviceCode=' + serviceCode + '&staffCode=' + staffCode,
     })
   },
   formSubmit(e) {
-    if (this.data.storeIndex == null || this.data.severIndex == null || this.data.staffIndex == null || this.data.name=='' || this.data.phone=='' || this.data.region==''){
-      wx.showToast({title: '请填写所有表单数据！',icon:'none'})
+    if (this.data.smsCode == ''){
+      this.showModal({ msg:'请输入验证码'})
       return false
     }
+    if (this.data.storeIndex == null || this.data.severIndex == null || this.data.staffIndex == null || this.data.name=='' || this.data.phone=='' || this.data.region==''){
+      wx.showToast({ title: '请填写完整预约信息',icon:'none'})
+      return false
+    }
+    let index = this.data.staffIndex == 0 ? 1 : this.data.staffIndex
     let params = {
       memberId: wx.getStorageSync('userId'),
     　name: this.data.name,
@@ -574,12 +544,13 @@ Page({
       counterCode: this.data.storeList[this.data.storeIndex].counterCode,
       channelCode: this.data.channelList[this.data.channelIndex].channelCode,
       serviceCode: this.data.serverList[this.data.severIndex].serviceCode,
-      staffCode: this.data.staffList[this.data.staffIndex].staffCode,
-      staffName: this.data.staffList[this.data.staffIndex].staffName,
+      staffCode: this.data.staffList[index].staffCode,
+      staffName: this.data.staffList[index].staffName,
       smsCode: this.data.smsCode,
       serviceDate: this.data.day,
       timeFrom: this.data.timeFrom + ':00', 
       timeTo: this.data.timeTo + ':00',
+      formId: e.detail.formId,
     }
     if (this.data.bookId) {
       this.updata(params)
@@ -607,8 +578,14 @@ Page({
             }
           }
         })
-      } else {
+      } else if (res.err_code == 5001){
         wx.showToast({ title: res.err_msg, icon: 'none' })
+        this.setData({
+          showCode:true
+        })
+      }
+      else {
+        wx.showToast({ title: '请选择其他可预约时间段', icon: 'none' })
       }
     }).catch(err => {
       console.log(err)
@@ -632,7 +609,7 @@ Page({
           }
         })
       } else {
-        wx.showToast({ title: res.err_msg, icon: 'none' })
+        wx.showToast({ title: '请选择其他可预约时间段', icon: 'none' })
       }
     }).catch(err => {
       console.log(err)
@@ -647,16 +624,83 @@ Page({
       confirmColor: '#eea0ae',
     })
   },
-  submit(e) {
-    console.log(this.data.day)
-    if (this.data.day == '' || this.data.currentIndex == null) {
-      this.showModal({msg:'请选择预约日期或时间！'})
-    } else {
-      this.setData({
-        maskShow: false,
-        date: this.data.date + ' ' + this.data.timeFrom + '-' + this.data.timeTo
+  updateLocationInfo(event) {
+    console.log(event)
+    var that = this
+    var title = event.currentTarget.dataset.title
+    var pickerInfo = that.data.pickerInfo
+
+
+    // 判断是否是button
+    if (title == 'state') {
+      pickerInfo.state = true
+      pickerInfo.value = [0, 0]
+      pickerInfo.citys = this.data.cityList[0]
+      that.setData({
+        pickerInfo: pickerInfo
+      });
+
+      //此处应该请求网络数据，为了方便我写了一些数据进行测试，获取省列表
+      var provinceList = that.data.provinceList;
+      pickerInfo.provinces = provinceList;
+
+      that.setData({
+        pickerInfo: pickerInfo
+      });
+
+    } else if (title == 'cancel') {
+      pickerInfo.state = false
+      that.setData({
+        pickerInfo: pickerInfo
       })
+    } else {
+      // 设置选择结果
+      pickerInfo.state = false;
+
+      var region = that.data.region
+
+      var cityNum = pickerInfo.value[1]
+      var cityInfo = pickerInfo.citys[cityNum]
+      region = cityInfo.cityName
+      if (this.data.region != region) {
+        that.setData({
+          storeList: [],
+          staffList: [],
+          channelIndex: null,
+          storeIndex: null,
+          staffIndex: null,
+          date: ''
+        })
+      }
+      that.setData({
+        pickerInfo: pickerInfo,
+        region: region,
+      });
+
+      // that.getCountyList();此处可以继续模仿选择区域
+
     }
+
+  },
+  //选择城市，通过bindchange和省ID获取城市列表
+  updatePicker(event) {
+    console.log(event)
+    var that = this;
+    var pickerInfo = that.data.pickerInfo;
+    var num = event.detail.value[0];
+    var cityNum = event.detail.value[1];
+
+    // var requestInfo = {};
+    // 此处根据省ID通过网络获取城市列表，这里我用本地数据代替
+    // requestInfo.provinceID = pickerInfo.provinces[num].provinceID;
+    var cityList = that.data.cityList;
+    pickerInfo.citys = cityList[num];
+    pickerInfo.value = [num, cityNum];
+
+    that.setData({
+      pickerInfo: pickerInfo
+    });
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -705,7 +749,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '眉吧服务预约',
+      title: '现在就去型眉定制！',
       path: 'pages/index/index',
       imageUrl: '/static/images/share.jpg'
     }

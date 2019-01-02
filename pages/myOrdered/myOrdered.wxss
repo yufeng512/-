@@ -50,6 +50,9 @@
   color: #999999;
   font-size: 26rpx;
 }
+.order-container .item-box .btn-box button[disabled]{
+  color: #666;
+}
 .order-container .item-box .btn-box button{
   width: 36vw;
   height: 72rpx;

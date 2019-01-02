@@ -59,16 +59,16 @@ Page({
     let judgeList = this.data.judgeList,
         params = {},
         isCheck = judgeList.every(item=> item.questionAnswer != '')
-
+    // this.data.bookId,
     if (isCheck){
       params.bookId = this.data.bookId,
-      params.survey = judgeList
+      params.survey = JSON.stringify(judgeList) 
       wx.showLoading({ title: '加载中', mask: true })
-      util.request(api.ServiceJudge, params, 'post').then(res => {
+      util.request(api.ServiceJudge, params, 'post','application/x-www-form-urlencoded').then(res => {
         wx.hideLoading()
         if (res.ret_code == 0) {
           wx.showModal({
-            content: '服务评价成功！',
+            content: '问卷已提交，感谢！',
             showCancel: false,
             confirmColor: '#fe697f',
             success(res) {
@@ -147,7 +147,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '眉吧服务预约',
+      title: '现在就去型眉定制！',
       path: 'pages/index/index',
       imageUrl: '/static/images/share.jpg'
     }

@@ -64,10 +64,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let params = {
-      bookingStatus: 0
-    }
-    this.bookingList(params)
+   
   },
 
   /**
@@ -81,7 +78,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      current:0,
+    })
+    let params = {
+      bookingStatus: 0
+    }
+    this.bookingList(params)
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -116,7 +119,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: '眉吧服务预约',
+      title: '现在就去型眉定制！',
       path: 'pages/index/index',
       imageUrl: '/static/images/share.jpg'
     }

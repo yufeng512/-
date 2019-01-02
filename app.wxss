@@ -163,7 +163,7 @@ image {
 /* button  */
 
 button[disabled] {
-  background: #ccc !important;
+  /* background: #ccc !important; */
 }
 
 button:after {

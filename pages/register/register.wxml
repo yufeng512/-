@@ -1,34 +1,38 @@
 <import src="/template/header-tpl.wxml" />
 <template is="headerTpl"></template>
-  <view class="warpper">
-    <view class="img-box">
-      <image mode="widthFix" src="{{imgUrl+'register-bg.png'}}"></image>
+<image src='/images/reg.jpg' mode='widthFix' class='regImg'></image>
+<!-- <view class="warpper">
+  <view class="img-box">
+    <image mode="widthFix" src="{{imgUrl+'register-bg.png'}}"></image>
+  </view>
+  <view class="content">
+    <view>
+      <image mode="widthFix" src="{{imgUrl+'ad.png'}}"></image>
     </view>
-    <view class="content">
-      <view >
-        <image mode="widthFix" src="{{imgUrl+'ad.png'}}"></image>
+    手机
+    <view class="item flex-start">
+      <view class="item-img">
+        <image src='/images/register-phone.png' mode="widthFix"></image>
       </view>
-        <!-- 手机 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src='/images/register-phone.png' mode="widthFix"></image></view>
-          <view class="input-box">
-            <input type="number"  name='mobile' value='{{mobile}}' maxlength="11" placeholder="输入手机号" placeholder-class="place-holder" bindinput="inputPhone"/>
-          </view>
-          <view class="item-btn" bindtap='sendCode'>验证码</view>
-        </view>
-        <!-- 验证码 -->
-        <view class="item flex-start">
-          <view class="item-img"><image src='/images/code.png' mode="widthFix"></image></view>
-          <view class="input-box">
-            <input maxlength="4" name='code' value='{{code}}' type="number" placeholder="请在此输入4位验证码" placeholder-class="place-holder" bindinput="inputCode"/>
-          </view>
-        </view>
-        <view >
-          <image mode="widthFix" src="{{imgUrl+'ad1.png'}}"></image>
-        </view>
-        <view class="btn-box">
-          <button bindtap='formSubmit'>一键注册</button>
-        </view>
+      <view class="input-box">
+        <input type="number" name='mobile' value='{{mobile}}' maxlength="11" placeholder="输入手机号" placeholder-class="place-holder" bindinput="inputPhone" />
+      </view>
+      <view class="item-btn" bindtap='sendCode'>验证码</view>
+    </view>
+    验证码
+    <view class="item flex-start">
+      <view class="item-img">
+        <image src='/images/code.png' mode="widthFix"></image>
+      </view>
+      <view class="input-box">
+        <input maxlength="4" name='code' value='{{code}}' type="number" placeholder="请在此输入4位验证码" placeholder-class="place-holder" bindinput="inputCode" />
+      </view>
+    </view>
+    <view>
+      <image mode="widthFix" src="{{imgUrl+'ad1.png'}}"></image>
+    </view>
+    <view class="btn-box">
+      <button bindtap='formSubmit'>一键注册</button>
     </view>
   </view>
-
+</view> -->
